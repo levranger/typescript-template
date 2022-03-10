@@ -1,71 +1,89 @@
 .header {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
 }
 
 .leftBar {
-    display: flex;
-
+  display: flex;
 }
 
 .button {
-    border: 2px solid black;
-    height: 40px;
-    padding: 5px;
-    text-align: center ;
-    min-width: 50px;
-    margin: 10px;
-    cursor: pointer;
+  border: 2px solid black;
+  height: 40px;
+  padding: 5px;
+  text-align: center;
+  min-width: 50px;
+  margin: 10px;
+  cursor: pointer;
 }
 
 .searchIcon {
-    margin-right: -35px;
-    z-index: 1;
+  margin-right: -35px;
+  z-index: 1;
 }
 
 .searchContainer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .searchInput {
-    display: block;
-    margin: 10px;
-    height: 40px;
-    border-radius: 40px;
-    padding: 15px 35px;
+  display: block;
+  margin: 10px;
+  height: 40px;
+  border-radius: 40px;
+  padding: 15px 35px;
+  width: 500px;
 }
 
 .buttonContainer {
-    display: flex;
-    align-items: flex-end;
+  display: flex;
+  align-items: flex-end;
 }
 
 .mobileLogo {
-    display: none;
+  display: none;
+}
+
+@media (max-width: 1165px) {
+  .searchInput {
+    width: 300px;
+  }
 }
 
 @media (max-width: 980px) {
-    .header {
-        flex-direction: column;
-        align-items: center;
-    }
-    .adminLoginButton {
-        display: none;
-    }
-    .searchContainer {
-        order: 0;
-    }
-    .leftBar {
-        order: 1;
-    }
-    .logo {
-        display: none;
-    }
-    .searchInput {
-        width: 100%;
-    }
-    .mobileLogo {
-        display: block;
-    }
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+  .adminLoginButton {
+    display: none;
+  }
+  .searchContainer {
+    order: 0;
+  }
+  .leftBar {
+    order: 1;
+  }
+  .logo {
+    display: none;
+  }
+  .searchInput {
+    width: 100%;
+  }
+  .mobileLogo {
+    display: block;
+  }
+  .header {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 375px) {
+  .button {
+    padding: 8px 5px;
+    font-size: 13px;
+    height: 50px;
+  }
 }

@@ -5,6 +5,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import { store } from '../app/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import './index.css';
 
 config.autoAddCss = false;
 

@@ -1,33 +1,23 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { Collections, Layout } from '../components';
 import auth from '../services/auth';
+import { useAppSelector } from '../app/hooks';
 import { userSelector } from '../features/authSlice';
-import { Layout } from '../components/Layout/Layout';
-
-import { Header } from '../components/Header/Header';
 
 const IndexPage: React.FC = () => {
-  const dispatch = useAppDispatch();
-
   const user = useAppSelector(userSelector);
-
+  console.log(user);
+  // @ts-ignore
   useEffect(() => {
-    // auth.login();
-    // if (typeof window !== 'undefined') {
-    //     try {
-    //         dispatch(sendLoginRequest())
-    //         let res = auth.getUser();
-    //         res.then(data =>  dispatch(loginRequestSuccess(data)))
-    //     } catch (err) {
-    //         dispatch(loginRequestFailed())
-    //         console.log(err);
-    //     }
-    // }
-  }, []);
+    (async () => {
+      const user = await auth.getUser();
+      console.log(user);
+    })();
+  });
 
   return (
-    <Layout>
-      <Header />
+    <Layout title="Curated Collections">
+      <Collections />
     </Layout>
   );
 };

@@ -1,0 +1,79 @@
+.imageDetails {
+    width: 30%;
+    padding-top: 10px;
+    text-align: left;
+}
+
+.tag {
+    display: inline-block;
+    border: 2px solid black;
+    padding: 4px;
+    margin: 2px;
+}
+
+.descriptionBlock {
+    padding: 2px 5px;
+    margin-top: 10px;
+    border: 2px solid black;
+    height: 100px;
+    overflow-y: scroll;
+}
+
+@media (max-width: 980px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .imageDetails {
+        width: 100%;
+    }
+
+    .imageWrapper {
+        margin-right: 0;
+    }
+}
+
+.img {
+    max-width: 100%;
+}
+
+.formWrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    margin: 5px 0;
+    border-radius: 4px;
+    border: 2px solid black;
+}
+
+.commentInput {
+    resize: none;
+    min-height: 100px;
+}
+
+.button {
+    border: 2px solid black;
+    width:140px;
+    text-align: center;
+    align-self: flex-end;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.errorMessage {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    font-size: 12px;
+    background: #d30909;
+    color: #fff;
+    height: 24px;
+}
+
+.errorInput {
+    border: 2px solid red;
+}
