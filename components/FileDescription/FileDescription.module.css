@@ -7,7 +7,7 @@
 .tag {
     display: inline-block;
     border: 2px solid black;
-    padding: 4px;
+    padding: 4px 10px;
     margin: 2px;
 }
 
@@ -47,6 +47,7 @@
     margin: 5px 0;
     border-radius: 4px;
     border: 2px solid black;
+    padding: 5px 7px;
 }
 
 .commentInput {
@@ -72,6 +73,7 @@
     background: #d30909;
     color: #fff;
     height: 24px;
+    margin-bottom: 5px;
 }
 
 .errorInput {

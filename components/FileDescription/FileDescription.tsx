@@ -68,7 +68,7 @@ export const FileDescription: FC<Props> = ({
           const commentHasError = hasErrors(touched.comment, errors.comment);
 
           const inputErrorStyle = (hasError: boolean): StyleType =>
-            cs(hasError, style.errorInput, style.input);
+            cs(hasError, cx(style.errorInput, style.input), style.input);
 
           return (
             <Form className={style.formWrapper}>
