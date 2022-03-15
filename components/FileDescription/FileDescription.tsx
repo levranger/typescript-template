@@ -1,9 +1,16 @@
 import React, { FC } from 'react';
 import cx from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cs, isDefined, OnEventFn, StyleType } from '@rnw-community/shared';
 import { Field, Form, Formik, FormikErrors, FormikValues } from 'formik';
 import * as Yup from 'yup';
+import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import style from './FileDescription.module.css';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { changeEditMode } from '../../features/editFileSlice';
+import { isAuthorizedSelector } from '../../features/authSlice';
+import { EditModeEnum } from '../../interfaces';
 
 interface Props {
   fileId: string;
@@ -35,25 +42,74 @@ export const FileDescription: FC<Props> = ({
   description,
   onSubmit,
 }) => {
+  const isAuthorized = useAppSelector(isAuthorizedSelector);
+
+  const dispatch = useAppDispatch();
+
+  const handleEdit = (mode: EditModeEnum) => (): void =>
+    void dispatch(changeEditMode(mode));
+
   return (
     <div className={style.imageDetails}>
       <span>Archive ID: {archiveId}</span> <br />
-      <span>Filename: Image {fileId}.jpg</span>
+      <span>Filename: Image {fileId}.jpg</span>{' '}
+      {isAuthorized && (
+        <div
+          className={style.editIconContainer}
+          onClick={handleEdit(EditModeEnum.EditFileName)}
+        >
+          <FontAwesomeIcon icon={faPencilAlt as IconProp} />
+        </div>
+      )}
       <br />
       <span>
         Tags: <span className={style.tag}>Genre: Speeches</span>{' '}
         <span className={style.tag}>Event: 11th Syim Hashas</span>
+        {isAuthorized && (
+          <div
+            className={style.editIconContainer}
+            onClick={handleEdit(EditModeEnum.EditTag)}
+          >
+            <FontAwesomeIcon icon={faPencilAlt as IconProp} />
+          </div>
+        )}
       </span>
       <br />
       <p>
         People: <span className={style.tag}>R. ____</span>
         <span className={style.tag}>R. ____</span>
+        {isAuthorized && (
+          <div
+            className={style.editIconContainer}
+            onClick={handleEdit(EditModeEnum.EditPeople)}
+          >
+            <FontAwesomeIcon icon={faPencilAlt as IconProp} />
+          </div>
+        )}
       </p>
       <span>
         Folder
         <span className={style.tag}>/C/Desktop/files/blabla/{fileId}.jpg</span>
+        {isAuthorized && (
+          <div
+            className={style.editIconContainer}
+            onClick={handleEdit(EditModeEnum.EditFolder)}
+          >
+            <FontAwesomeIcon icon={faPencilAlt as IconProp} />
+          </div>
+        )}
       </span>
-      <div className={style.descriptionBlock}>{description}</div>
+      <div className={style.descriptionContainer}>
+        <div className={style.descriptionBlock}>{description}</div>
+        {isAuthorized && (
+          <div
+            className={style.editIconContainer}
+            onClick={handleEdit(EditModeEnum.EditDescription)}
+          >
+            <FontAwesomeIcon icon={faPencilAlt as IconProp} />
+          </div>
+        )}
+      </div>
       <Formik
         validationSchema={validationSchema}
         initialValues={{ name: '', email: '', comment: '' }}

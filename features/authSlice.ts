@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { isDefined } from '@rnw-community/shared';
 import { User } from 'oidc-client';
 import { RootState } from '../app/store';
 
@@ -50,6 +51,8 @@ export const authSlice = createSlice({
 export const { setUser } = authSlice.actions;
 
 export const authSelector = (state: RootState): AuthState => state.auth;
+export const isAuthorizedSelector = (state: RootState): boolean =>
+  isDefined(state.auth.user);
 export const userSelector = (state: RootState): User | null => state.auth.user;
 
 export default authSlice.reducer;
