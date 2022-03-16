@@ -1,0 +1,24 @@
+diff --git a/node_modules/@rnw-community/shared/dist/index.d.ts b/node_modules/@rnw-community/shared/dist/index.d.ts
+index d338f07..009fd1e 100644
+--- a/node_modules/@rnw-community/shared/dist/index.d.ts
++++ b/node_modules/@rnw-community/shared/dist/index.d.ts
+@@ -7,7 +7,7 @@ export { isString } from './type-guard/is-string/is-string';
+ export { isEmptyString } from './type-guard/is-empty-string/is-empty-string';
+ export { isNotEmptyString } from './type-guard/is-not-empty-string/is-not-empty-string';
+ export { isError } from './type-guard/is-error/is-error';
+-export { cs } from './util/cs/cs';
++export { cs, StyleType } from './util/cs/cs';
+ export { emptyFn } from './util/empty-fn/empty-fn';
+ export { getErrorMessage } from './util/get-error-message/get-error-message';
+ //# sourceMappingURL=index.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@rnw-community/shared/dist/util/cs/cs.d.ts b/node_modules/@rnw-community/shared/dist/util/cs/cs.d.ts
+index 95be459..d9cbc98 100644
+--- a/node_modules/@rnw-community/shared/dist/util/cs/cs.d.ts
++++ b/node_modules/@rnw-community/shared/dist/util/cs/cs.d.ts
+@@ -1,4 +1,4 @@
+-declare type StyleType = Array<Record<string, unknown>> | object | false | null | undefined;
++export declare type StyleType = Array<Record<string, unknown>> | object | false | null | undefined | string;
+ /**
+  * Conditional styling, returns `trueStyle` object if `condition` is true,
+  * otherwise returns `falseStyle` object which defaults to `{}`.
