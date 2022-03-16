@@ -1,11 +1,10 @@
 import React from 'react';
-import { Collections, Layout } from '../components';
 
 const IndexPage: React.FC = () => {
   return (
-    <Layout title="Curated Collections">
-      <Collections />
-    </Layout>
+   <div>
+       index page
+   </div>
   );
 };
 
