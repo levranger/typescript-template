@@ -1,13 +1,12 @@
 .wrapper {
     padding: 100px 0;
-    width: 80%;
     margin: 0 auto;
     display: flex;
 }
 
 .tabs {
     background-color: #FCF8F2;
-    padding: 15px 15px;
+    padding:20px;
 
 }
 
@@ -72,4 +71,73 @@
 }
 .error {
     color: red;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #9A9A9A;
+    padding: 2rem 0;
+}
+
+.buttonContainer button:nth-child(1) {
+    background-color: transparent;
+    color: #9A9A9A;
+    width: 9rem;
+    margin-right: 2rem;
+    cursor: pointer;
+
+}
+
+
+.buttonContainer button:nth-child(2){
+    font-size: 25px;
+    color: #fff !important;
+    border: 0.2rem solid #E6590D !important;
+    text-transform: uppercase;
+    background: #E6590D !important;
+    display: inline-block;
+    cursor: pointer;
+
+}
+@media only screen and (max-width: 750px)  {
+    .wrapper {
+        min-width: 320px;
+padding: 0 !important;
+    }
+    .row {
+        flex-direction: column;
+    }
+    .tabContainer {
+        margin: 0;
+    }
+    .formWrapper {
+        padding: 0 !important;
+    }
+    .buttonContainer button:nth-child(2){
+        font-size: 15px;
+
+
+    }
+}
+
+@media (max-width: 1100px) {
+    .formWrapper {
+        margin: 0 50px;
+    }
+
+}
+
+@media (max-width: 1000px) {
+    .wrapper {
+        flex-direction: column;
+        padding: 20px 0;
+    }
+
+}
+
+@media (max-width: 370px) {
+    .wrapper {
+        width: 320px;
+    }
 }

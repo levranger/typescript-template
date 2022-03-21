@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { isDefined } from '@rnw-community/shared';
 import { User } from 'oidc-client';
+import { createAsyncThunk } from '@reduxjs/toolkit/src/createAsyncThunk';
 import { RootState } from '../app/store';
+import { LoginPayloadInterface } from '../contracts';
 
 // here we are typing the types for the state
 export type AuthState = {
@@ -16,6 +18,17 @@ const initialState: AuthState = {
   pending: false,
   error: false,
 };
+
+const sendLoginRequest = createAsyncThunk(
+  'auth/sendLoginRequest',
+  async (userData: LoginPayloadInterface) => {
+    const res = fetch('', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...userData }),
+    });
+  }
+);
 
 export const authSlice = createSlice({
   name: 'auth',

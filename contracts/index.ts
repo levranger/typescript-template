@@ -1,0 +1,1 @@
+export * from './loginPayload.interface';

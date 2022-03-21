@@ -1,3 +1,2 @@
-export * from './Header/Header';
-export * from './Footer/Footer';
 export * from './ApplicationForm/ApplicationForm';
+export * from './Layout/Layout';

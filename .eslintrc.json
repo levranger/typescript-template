@@ -23,6 +23,7 @@
         "react-hooks"
     ],
     "rules":{
+        "react/button-has-type": "off",
         "jsx-a11y/label-has-associated-control": "off",
         "no-param-reassign": "off",
         "class-methods-use-this": "off",

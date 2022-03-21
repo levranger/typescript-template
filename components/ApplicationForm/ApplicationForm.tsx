@@ -8,22 +8,20 @@ import {
   useField,
   useFormikContext,
 } from 'formik';
+import InputMask, { TextField } from 'react-input-mask';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as Yup from 'yup';
 import { cs, isDefined, StyleType } from '@rnw-community/shared';
 import cx from 'classnames';
 import styles from './ApplicationForm.module.css';
+import { hasErrors } from '../../utils/hasErrors';
 
-interface DatePickerProps {
+interface GenericPropsInterface {
   name: string;
   className: StyleType;
+  placeholder: string;
 }
-
-const hasErrors = (
-  isTouched: boolean,
-  hasError: keyof FormikErrors<FormikValues>
-): boolean => isDefined(isTouched && hasError);
 
 const validationSchema = Yup.object({
   firstName: Yup.string().trim().required('First name is required'),
@@ -38,10 +36,10 @@ const validationSchema = Yup.object({
   monthlyIncome: Yup.number().required('Monthly income is required'),
   monthlyExpenses: Yup.number().required('Monthly expenses is required'),
   email: Yup.string().trim().required('Email is required'),
-  phoneNumber: Yup.string().required('Phone number is required'),
+  phoneNumber: Yup.string().trim().required('Phone number is required'),
 });
 
-const DatePickerField: FC<DatePickerProps> = ({ name, className }) => {
+const DatePickerField: FC<GenericPropsInterface> = ({ name, className }) => {
   const { setFieldValue } = useFormikContext();
   const [field] = useField(name);
 
@@ -52,6 +50,31 @@ const DatePickerField: FC<DatePickerProps> = ({ name, className }) => {
       className={className}
       onChange={(val) => {
         setFieldValue(field.name, val);
+      }}
+    />
+  );
+};
+
+const MaskedInput: FC<GenericPropsInterface> = ({
+  placeholder,
+  name,
+  className,
+}) => {
+  const { setFieldValue, setFieldTouched } = useFormikContext();
+  const [field] = useField(name);
+
+  return (
+    <InputMask
+      {...field}
+      type="text"
+      onBlur={(e) => setFieldValue(field.name, e.target.value, true)}
+      name="phoneNumber"
+      mask="999-999-9999"
+      placeholder={placeholder}
+      className={className}
+      onChange={(e) => {
+        setFieldValue(field.name, e.target.value, true);
+        setFieldTouched(field.name);
       }}
     />
   );
@@ -86,7 +109,7 @@ export const ApplicationForm: FC = () => {
             email: '',
             phoneNumber: '',
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => alert(JSON.stringify(values))}
         >
           {({ submitForm, errors, touched, initialValues, values }) => {
             const firstNameHasErrors = hasErrors(
@@ -98,6 +121,7 @@ export const ApplicationForm: FC = () => {
               errors.lastName
             );
             const ssnHasErrors = hasErrors(touched.ssn, errors.ssn);
+            // @ts-ignore
             const dobHasErrors = hasErrors(touched.dob, errors.dob);
             const monthlyIncomeHasErrors = hasErrors(
               touched.monthlyIncome,
@@ -114,7 +138,11 @@ export const ApplicationForm: FC = () => {
             );
 
             const inputErrorStyle = (hasError: boolean): StyleType =>
-              cs(hasError, cx(styles.errorInput, styles.input), styles.input);
+              cs(
+                hasError,
+                cx(styles.errorInput, styles.input) as StyleType,
+                styles.input as StyleType
+              );
 
             return (
               <Form className={styles.form}>
@@ -237,16 +265,20 @@ export const ApplicationForm: FC = () => {
                   </div>
                   <div className={styles.inputContainer}>
                     <label htmlFor="phoneNumber">Phone number</label>
-                    <Field
-                      placeholder="Phone number"
+                    <MaskedInput
                       name="phoneNumber"
-                      type="number"
+                      placeholder="Phone number"
                       className={inputErrorStyle(phoneNumberHasErrors)}
                     />
                     {phoneNumberHasErrors && (
                       <div className={styles.error}>{errors.phoneNumber}</div>
                     )}
                   </div>
+                </div>
+
+                <div className={styles.buttonContainer}>
+                  <button type="button">Cancel</button>
+                  <button type="submit">Get Pre-approved</button>
                 </div>
               </Form>
             );
