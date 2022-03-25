@@ -1,0 +1,17 @@
+.username {
+    color: #e6590d;
+    font-weight: bolder;
+}
+.wrapper p {
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1rem;
+
+}
+.wrapper {
+    margin: 1rem 0px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.date {
+    margin-bottom: .5rem;
+}

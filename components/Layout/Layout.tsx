@@ -39,7 +39,7 @@ export const Layout: FC = ({ children }) => {
                       <Nav.Link className={styles.navItem} href="#action5">
                         Contact Us
                       </Nav.Link>
-                      <Nav.Link className={styles.navItem} href="#action6">
+                      <Nav.Link className={styles.navItem} href="/dealer-login">
                         Login
                       </Nav.Link>
                       <Nav.Link className={styles.navItem} href="#action7">

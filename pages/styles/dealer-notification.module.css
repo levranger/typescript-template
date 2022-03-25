@@ -1,0 +1,37 @@
+.wrapper {
+    width: 100%;
+    padding:0 30px
+    overflow-x: hidden;
+}
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 0;
+}
+.icon {
+    font-size: 30px;
+    margin-right: 35px;
+}
+.titleLeft {
+    display: flex;
+}
+.applicants {
+    color: #9B9BA7;
+    font-size: 15px;
+}
+.titleLeft h3 {
+    color: #154F85;
+}
+.searchbarContainer {
+    background-color: #f2f2f2;
+    padding: 20px;
+
+}
+.searchbar {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 38px;
+    width: 15rem;
+    padding-left: 15px;
+}

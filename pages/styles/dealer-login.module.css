@@ -18,7 +18,7 @@
     background-color: #F9F7F4;
     height: 35rem;
     width: 30rem;
-    padding: 4rem 3rem 3rem 3rem;
+    padding: 30px 50px;
 }
 .left h3 {
     text-align: left;
@@ -42,7 +42,6 @@
     padding: 0px;
     display: flex;
     flex-direction: column;
-    height: 74%;
     text-align: center;
 }
 .form label {
@@ -68,6 +67,11 @@ border: none;
 }
 .errorInput {
     border: 2px solid red;
+}
+.errorCred {
+    color: red;
+    font-size: 22px;
+    padding: 10px ;
 }
 @media only screen and (max-width: 750px)  {
     .wrapper {

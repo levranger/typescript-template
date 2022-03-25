@@ -1,0 +1,18 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.title {
+    display: flex;
+    align-items: center;
+    padding: 1rem 3rem;
+    background-color: #f2f2f2;
+}
+.title h3 {
+    color: #154F85;
+}
+.icon {
+    margin-right: 1rem;
+    font-size: 25px;
+}

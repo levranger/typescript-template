@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import Image from 'next/image';
 import {
   Field,
@@ -10,19 +10,45 @@ import {
   useFormikContext,
 } from 'formik';
 import * as Yup from 'yup';
-import { cs, StyleType } from '@rnw-community/shared';
+import { cs, isDefined, StyleType } from '@rnw-community/shared';
 import cx from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import styles from './styles/dealer-login.module.css';
 import Logo from '../assets/images/logo.png';
 import car from '../assets/images/img.png';
 import { hasErrors } from '../utils/hasErrors';
+import { LoginPayloadInterface } from '../contracts';
+import {
+  authSelector,
+  isAuthorizedSelector,
+  sendLoginRequest,
+  userSelector,
+} from '../features/authSlice';
 
 const validationSchema = Yup.object({
   username: Yup.string().trim().required('Username is required'),
   password: Yup.string().trim().required('Password is required'),
 });
 
+// @ts-ignore
 const DealerLogin: FC = () => {
+  const dispatch = useDispatch();
+
+  const user = useSelector(userSelector);
+  const isAuthorized = useSelector(isAuthorizedSelector);
+
+  const { pending, error, errorMessage } = useSelector(authSelector);
+  const router = useRouter();
+
+  const handleLogin = (userData: LoginPayloadInterface): void => {
+    dispatch(sendLoginRequest(userData));
+  };
+
+  useEffect(() => {
+    if (isAuthorized) router.replace('/dealership');
+  }, [user]);
+
   return (
     <div className={styles.wrapper}>
       <Image src={Logo} />
@@ -39,7 +65,7 @@ const DealerLogin: FC = () => {
               username: '',
               password: '',
             }}
-            onSubmit={(values) => alert(JSON.stringify(values))}
+            onSubmit={(values) => handleLogin(values)}
           >
             {({ submitForm, errors, touched, initialValues, values }) => {
               const usernameHasErrors = hasErrors(
@@ -76,7 +102,11 @@ const DealerLogin: FC = () => {
                   {passwordHasErrors && (
                     <div className={styles.error}>{errors.password}</div>
                   )}
+
                   <button type="submit">LOGIN</button>
+                  {error && !pending && (
+                    <div className={styles.errorCred}>{errorMessage}</div>
+                  )}
                 </Form>
               );
             }}
