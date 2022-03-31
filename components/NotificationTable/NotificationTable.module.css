@@ -45,7 +45,8 @@
     background: #f3f3f3;
 }
 .tableRow td {
-    padding: .8rem 2.2rem;
+    padding: 8px 5px;
+    font-size: 13px;
     background: #F9F9FB;
 
 }

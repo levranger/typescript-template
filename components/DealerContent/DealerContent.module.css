@@ -1,0 +1,79 @@
+.wrapper {
+    flex:1;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.content {
+    padding: 30px 20px;
+}
+.content > span {
+    font-weight: 500;
+    color: #9B9BA7;
+    font-size: 16px;
+}
+
+.contentHeader {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 40px;
+}
+
+.contentHeader h2 {
+    color: rgb(21, 79, 133);
+    font-size: 2rem;
+}
+
+.icon {
+    padding-right: 20px;
+}
+
+.plusIcon {
+    color: white;
+    padding-right: 15px;
+}
+
+.addButton {
+    cursor: pointer;
+    padding: 11px;
+    margin-left: 20px;
+    color: #fff;
+    background-color: #446EE2;
+    border-color: #446EE2;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.tableWrapper {
+    overflow-x: scroll;
+}
+
+.table thead tr th {
+    padding: 1.2rem 2.2rem;
+    font-size: 1.4rem;
+    line-height: 1.21;
+    font-weight: 500;
+    background: #F9F9FB;
+}
+
+.table thead {
+     border-bottom: 1.5px solid  black;
+}
+
+.table tbody {
+    margin-top: 20px;
+}
+
+.table tr {
+    border-bottom: 1px solid black;
+}
+
+.table td {
+    border: 0;
+    vertical-align: middle;
+    padding: 10px;
+    font-size: 20px;
+    line-height: 1.15;
+    background: #FAFAFF;
+}

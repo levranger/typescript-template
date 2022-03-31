@@ -1,18 +1,10 @@
 import React, { FC } from 'react';
-import {
-  Field,
-  Form,
-  Formik,
-  FormikErrors,
-  FormikValues,
-  useField,
-  useFormikContext,
-} from 'formik';
-import InputMask, { TextField } from 'react-input-mask';
+import { Field, Form, Formik, useField, useFormikContext } from 'formik';
+import InputMask from 'react-input-mask';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as Yup from 'yup';
-import { cs, isDefined, StyleType } from '@rnw-community/shared';
+import { cs, StyleType } from '@rnw-community/shared';
 import cx from 'classnames';
 import styles from './ApplicationForm.module.css';
 import { hasErrors } from '../../utils/hasErrors';
@@ -20,7 +12,7 @@ import { hasErrors } from '../../utils/hasErrors';
 interface GenericPropsInterface {
   name: string;
   className: StyleType;
-  placeholder: string;
+  placeholder?: string;
 }
 
 const validationSchema = Yup.object({
@@ -55,7 +47,7 @@ const DatePickerField: FC<GenericPropsInterface> = ({ name, className }) => {
   );
 };
 
-const MaskedInput: FC<GenericPropsInterface> = ({
+export const MaskedInput: FC<GenericPropsInterface> = ({
   placeholder,
   name,
   className,

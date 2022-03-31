@@ -1,7 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ApplicationInterface } from '../contracts';
+import {
+  ApplicationInterface,
+  DealerInterface,
+  NotificationInterface,
+} from '../contracts';
 import { RootState } from '../app/store';
-import { NotificationInterface } from '../contracts/notification.interface';
 
 type DashboardState = {
   applications: ApplicationInterface[];
@@ -34,6 +37,7 @@ export const loadApplications = createAsyncThunk(
     return response;
   }
 );
+
 export const loadNotifications = createAsyncThunk(
   'dashboard/loadNotifications',
   async (userId: string) => {
@@ -52,7 +56,7 @@ export const loadNotifications = createAsyncThunk(
     return response;
   }
 );
-export const dashboardSlice = createSlice({
+export const dealerDashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
   reducers: {
@@ -107,7 +111,7 @@ export const dashboardSlice = createSlice({
 });
 
 export const { setApplicationsAction, setNotificationsAction } =
-  dashboardSlice.actions;
+  dealerDashboardSlice.actions;
 
 export const applicationsSelector = (
   state: RootState
@@ -117,4 +121,4 @@ export const notificationsSelector = (
   state: RootState
 ): NotificationInterface[] => state.dashboard.notifications;
 
-export default dashboardSlice.reducer;
+export default dealerDashboardSlice.reducer;

@@ -19,7 +19,7 @@ export interface UserInterface {
   MiddleName: string;
   PostalCode: string;
   ProfileGUID: string;
-  ProfileTypeGUID: string;
+  ProfileTypeID: string;
   State: string;
   TAXID: string;
   expMinutes: number;

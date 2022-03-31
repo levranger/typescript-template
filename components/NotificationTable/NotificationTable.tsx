@@ -11,20 +11,21 @@ import {
   loadNotifications,
   notificationsSelector,
   setNotificationsAction,
-} from '../../features/dashboardSlice';
+} from '../../features/dealerDashboardSlice';
+import { NotificationInterface } from '../../contracts';
 
-export const NotificationTable: FC = () => {
+interface Props {
+  notifications: NotificationInterface[];
+}
+
+export const NotificationTable: FC<Props> = ({ notifications }) => {
   const [searchParam, setSearchParam] = useState<string>('');
 
   const dispatch = useDispatch();
 
-  const user = useSelector(userSelector);
-  const notifications = useSelector(notificationsSelector);
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setSearchParam(e.target.value.toLowerCase());
 
-  useEffect(() => void dispatch(loadNotifications(user.ID)), []);
   useEffect(() => {
     const result = notifications.map((item) => {
       if (
@@ -77,7 +78,7 @@ export const NotificationTable: FC = () => {
         </thead>
         <tbody>
           {notifications.map((item) => (
-            <NotificationRow {...item} />
+            <NotificationRow key={item.ID} {...item} />
           ))}
         </tbody>
       </table>

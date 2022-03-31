@@ -1,16 +1,8 @@
 import React, { FC, useEffect } from 'react';
 import Image from 'next/image';
-import {
-  Field,
-  Form,
-  Formik,
-  FormikErrors,
-  FormikValues,
-  useField,
-  useFormikContext,
-} from 'formik';
+import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { cs, isDefined, StyleType } from '@rnw-community/shared';
+import { cs, StyleType } from '@rnw-community/shared';
 import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -46,7 +38,8 @@ const DealerLogin: FC = () => {
   };
 
   useEffect(() => {
-    if (isAuthorized) router.replace('/dealership');
+    if (user?.ProfileTypeID === '2') router.replace('/dealership');
+    if (user?.ProfileTypeID === '1') router.replace('/admin');
   }, [user]);
 
   return (

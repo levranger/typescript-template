@@ -1,0 +1,29 @@
+.inputBar {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    background: #F8F8F8;
+    margin: 5px 0;
+}
+
+.inputBar input {
+    border: 1px solid #B2B2B2;
+    margin-top: 5px;
+    padding: 10px 10px;
+    border-radius: 8px;
+}
+
+.input {
+    border: 1px solid #B2B2B2;
+    margin-top: 5px;
+    padding: 10px 10px;
+    border-radius: 8px;
+}
+
+.errorInput {
+    border: 2px solid red !important;
+}
+
+.errorText {
+    color: red
+}

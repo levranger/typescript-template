@@ -12,9 +12,13 @@ import Link from 'next/link';
 import styles from './DealerHeader.module.css';
 import { isAuthorizedSelector, logoutAction } from '../../features/authSlice';
 import { NotificationBar } from '../NotificationBar/NotificationBar';
-import { notificationsSelector } from '../../features/dashboardSlice';
+import { notificationsSelector } from '../../features/dealerDashboardSlice';
 
-export const DealerHeader: FC = () => {
+interface Props {
+  title?: string;
+}
+
+export const DealerHeader: FC<Props> = ({ title = 'Dealer' }) => {
   const [isLogoutPanelExpanded, setIsLogoutPanelExpanded] =
     useState<boolean>(false);
   const [isNotificationPanelExpanded, setIsNotificationPanelExpanded] =
@@ -33,7 +37,7 @@ export const DealerHeader: FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h3 className={styles.pageTitle}>Dealer</h3>
+      <h3 className={styles.pageTitle}>{title}</h3>
       <div className={styles.profileContainer}>
         <FontAwesomeIcon
           onClick={toggleNotificationPanel}
@@ -60,7 +64,7 @@ export const DealerHeader: FC = () => {
           <p>10 Notifications</p>
           <div className={styles.panel}>
             {notifications.map((item) => (
-              <NotificationBar {...item} />
+              <NotificationBar key={item.ID} {...item} />
             ))}
           </div>
           <Link href="/dealer-notification">

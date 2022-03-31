@@ -23,20 +23,13 @@
         "react-hooks"
     ],
     "rules":{
+        "max-len": "off",
+        "react/require-default-props": "off",
         "consistent-return": "off",
         "jsx-a11y/no-noninteractive-element-interactions":"off",
         "jsx-a11y/control-has-associated-label": "off",
         "no-unused-vars": "off",
-        "unused-imports/no-unused-imports": "error",
-        "unused-imports/no-unused-vars": [
-            "warn",
-            {
-                "vars": "all",
-                "varsIgnorePattern": "^_",
-                "args": "after-used",
-                "argsIgnorePattern": "^_"
-            }
-        ],
+        "unused-imports/no-unused-imports": "off",
         "react/button-has-type": "off",
         "jsx-a11y/label-has-associated-control": "off",
         "no-param-reassign": "off",

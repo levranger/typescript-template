@@ -1,11 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Link from 'next/link';
 
-import { faArrowRight, faFile } from '@fortawesome/fontawesome-free-solid';
+import { faFile } from '@fortawesome/fontawesome-free-solid';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useDispatch, useSelector } from 'react-redux';
-import { isEmptyString } from '@rnw-community/shared';
+import { isArray } from 'util';
 import { DealerHeader } from '../DealerHeader/DealerHeader';
 import styles from './DealerAppTable.module.css';
 import { DealerRow } from '../DealerRow/DealerRow';
@@ -13,7 +12,7 @@ import {
   applicationsSelector,
   loadApplications,
   setApplicationsAction,
-} from '../../features/dashboardSlice';
+} from '../../features/dealerDashboardSlice';
 import { userSelector } from '../../features/authSlice';
 
 export const DealerAppTable: FC = () => {
@@ -86,9 +85,8 @@ export const DealerAppTable: FC = () => {
           </tr>
         </thead>
         <tbody>
-          {applications.map((item) => (
-            <DealerRow {...item} />
-          ))}
+          {isArray(applications) &&
+            applications.map((item) => <DealerRow key={item.ID} {...item} />)}
         </tbody>
       </table>
     </div>

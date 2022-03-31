@@ -20,10 +20,7 @@ export const NotificationRow: FC<Props> = ({
       <td>
         <FontAwesomeIcon icon={faBell as IconProp} color="lightgreen" />
       </td>
-      <td>
-        {FirstName}
-        {LastName}
-      </td>
+      <td>{FirstName.concat(` ${LastName}`)}</td>
       <td>{Description}</td>
       <td>{DateAdded}</td>
     </tr>

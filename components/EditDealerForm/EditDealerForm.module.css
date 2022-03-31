@@ -1,0 +1,69 @@
+.wrapper {
+    flex: 1;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.contents {
+    padding: 20px;
+    max-width: 670px;
+}
+
+
+.infoContainer {
+    text-align: center;
+    display: flex;
+    flex-direction: column
+}
+
+.infoBar {
+    background: #F8F8F8;
+    padding: 15px 30px;
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.infoKey {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 17px;
+    line-height: 1.13;
+    color: #83786D;
+}
+
+.infoValue {
+    font-size: 25px;
+    line-height: 1.24;
+    color: #333333;
+    font-weight: 500;
+}
+
+.addressContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 15px;
+
+}
+
+.infoBox {
+    flex-direction: column;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.editButton {
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #FF7600;
+    border-color: #FF7600;
+    color: white;
+    padding: 10px 35px;
+}
+
+.loader {
+    margin: 100px auto;
+}
