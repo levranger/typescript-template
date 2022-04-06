@@ -1,18 +1,19 @@
 import React, { FC, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faBell,
-  faChevronCircleDown,
-  faChevronDown,
-} from '@fortawesome/fontawesome-free-solid';
+import { faBell, faChevronDown } from '@fortawesome/fontawesome-free-solid';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { divide } from 'lodash';
+import { useRouter } from 'next/router';
+import { NextRouter } from 'next/dist/client/router';
 import styles from './DealerHeader.module.css';
-import { isAuthorizedSelector, logoutAction } from '../../features/authSlice';
+import { logoutAction, userSelector } from '../../features/authSlice';
 import { NotificationBar } from '../NotificationBar/NotificationBar';
-import { notificationsSelector } from '../../features/dealerDashboardSlice';
+import {
+  loadNotifications,
+  notificationsSelector,
+} from '../../features/dealerDashboardSlice';
 
 interface Props {
   title?: string;
@@ -26,14 +27,22 @@ export const DealerHeader: FC<Props> = ({ title = 'Dealer' }) => {
 
   const dispatch = useDispatch();
 
+  const router = useRouter();
+
   const notifications = useSelector(notificationsSelector);
+  const user = useSelector(userSelector);
+
+  useEffect(() => void dispatch(loadNotifications(user?.ID)), [user]);
 
   const toggleSignoutPanel = (): void =>
     setIsLogoutPanelExpanded(!isLogoutPanelExpanded);
   const toggleNotificationPanel = (): void =>
     setIsNotificationPanelExpanded(!isNotificationPanelExpanded);
-
   const handleLogout = (): void => void dispatch(logoutAction());
+  const handleNotificationsNavigate = (): Promise<boolean> =>
+    router.pathname.includes('admin')
+      ? router.push('/admin/notifications')
+      : router.push('/dealer-notification');
 
   return (
     <div className={styles.wrapper}>
@@ -45,8 +54,12 @@ export const DealerHeader: FC<Props> = ({ title = 'Dealer' }) => {
           className={styles.icon}
           color="green"
         />
-        <div className={styles.profileIcon}>LP</div>
-        <h5 className={styles.username}>lana pant</h5>
+        <div className={styles.profileIcon}>
+          {user?.FirstName[0].concat(user?.LastName[0])}
+        </div>
+        <h5 className={styles.username}>
+          {user?.FirstName.concat(' ', user?.LastName)}
+        </h5>
         <FontAwesomeIcon
           onClick={toggleSignoutPanel}
           icon={faChevronDown as IconProp}
@@ -61,20 +74,20 @@ export const DealerHeader: FC<Props> = ({ title = 'Dealer' }) => {
       )}
       {isNotificationPanelExpanded && (
         <div className={styles.notificationPanel}>
-          <p>10 Notifications</p>
+          <p>{notifications.length} Notifications</p>
           <div className={styles.panel}>
             {notifications.map((item) => (
               <NotificationBar key={item.ID} {...item} />
             ))}
           </div>
-          <Link href="/dealer-notification">
+          <div onClick={handleNotificationsNavigate}>
             <p
               onClick={toggleNotificationPanel}
               className={styles.showMessages}
             >
               Show all messages
             </p>
-          </Link>
+          </div>
         </div>
       )}
     </div>

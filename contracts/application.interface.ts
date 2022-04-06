@@ -52,4 +52,5 @@ export interface ApplicationInterface {
   WorkPhone: string;
   YearsAtCurrentJob: number;
   isShown: boolean;
+  Dealership: string;
 }

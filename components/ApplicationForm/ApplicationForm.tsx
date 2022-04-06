@@ -4,7 +4,7 @@ import InputMask from 'react-input-mask';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as Yup from 'yup';
-import { cs, StyleType } from '@rnw-community/shared';
+import { cs, OnEventFn, StyleType } from '@rnw-community/shared';
 import cx from 'classnames';
 import styles from './ApplicationForm.module.css';
 import { hasErrors } from '../../utils/hasErrors';
@@ -16,19 +16,19 @@ interface GenericPropsInterface {
 }
 
 const validationSchema = Yup.object({
-  firstName: Yup.string().trim().required('First name is required'),
-  lastName: Yup.string().trim().required('Last name is required'),
-  middleName: Yup.string().trim(),
-  ssn: Yup.string()
+  FirstName: Yup.string().trim().required('First name is required'),
+  LastName: Yup.string().trim().required('Last name is required'),
+  MiddleName: Yup.string().trim(),
+  SSN: Yup.string()
     .required()
     .matches(/^[0-9]+$/, 'Must be only digits')
     .min(9, 'Must be exactly 9 digits')
     .max(9, 'Must be exactly 9 digits'),
-  dob: Yup.date().max(new Date(2004, 1, 1)).required(),
-  monthlyIncome: Yup.number().required('Monthly income is required'),
-  monthlyExpenses: Yup.number().required('Monthly expenses is required'),
-  email: Yup.string().trim().required('Email is required'),
-  phoneNumber: Yup.string().trim().required('Phone number is required'),
+  DOB: Yup.date().max(new Date(2004, 1, 1)).required(),
+  MonthlyIncome: Yup.number().required('Monthly income is required'),
+  MonthlyExpense: Yup.number().required('Monthly expenses is required'),
+  EmailAddress: Yup.string().trim().required('EmailAddress is required'),
+  CellPhone: Yup.string().trim().required('Phone number is required'),
 });
 
 const DatePickerField: FC<GenericPropsInterface> = ({ name, className }) => {
@@ -37,9 +37,12 @@ const DatePickerField: FC<GenericPropsInterface> = ({ name, className }) => {
 
   return (
     <DatePicker
-      {...field}
-      selected={(field.value && new Date(field.value)) || null}
+      selected={field.value}
       className={className}
+      dateFormatCalendar="MMM yyyy"
+      minDate={new Date(1990)}
+      maxDate={new Date()}
+      showYearDropdown
       onChange={(val) => {
         setFieldValue(field.name, val);
       }}
@@ -60,7 +63,7 @@ export const MaskedInput: FC<GenericPropsInterface> = ({
       {...field}
       type="text"
       onBlur={(e) => setFieldValue(field.name, e.target.value, true)}
-      name="phoneNumber"
+      name="CellPhone"
       mask="999-999-9999"
       placeholder={placeholder}
       className={className}
@@ -72,7 +75,11 @@ export const MaskedInput: FC<GenericPropsInterface> = ({
   );
 };
 
-export const ApplicationForm: FC = () => {
+interface Props {
+  onSubmit: OnEventFn;
+}
+
+export const ApplicationForm: FC<Props> = ({ onSubmit }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.tabContainer}>
@@ -89,44 +96,48 @@ export const ApplicationForm: FC = () => {
         </span>
         <Formik
           validationSchema={validationSchema}
-          validateOnChange
+          validateOnBlur
           initialValues={{
-            firstName: '',
-            middleName: '',
-            lastName: '',
-            ssn: '',
-            dob: new Date(2004, 1, 1),
-            monthlyIncome: 0,
-            monthlyExpenses: 0,
-            email: '',
-            phoneNumber: '',
+            FirstName: '',
+            MiddleName: '',
+            LastName: '',
+            SSN: '',
+            DOB: new Date(),
+            MonthlyIncome: 0,
+            MonthlyExpense: 0,
+            EmailAddress: '',
+            CellPhone: '',
+            Ip: '',
           }}
-          onSubmit={(values) => alert(JSON.stringify(values))}
+          onSubmit={(values) => onSubmit(values)}
         >
-          {({ submitForm, errors, touched, initialValues, values }) => {
+          {({ errors, touched, initialValues, values }) => {
             const firstNameHasErrors = hasErrors(
-              touched.firstName,
-              errors.firstName
+              touched.FirstName,
+              errors.FirstName
             );
-            const lastNameHasErrors = hasErrors(
-              touched.lastName,
-              errors.lastName
+            const LastNameHasErrors = hasErrors(
+              touched.LastName,
+              errors.LastName
             );
-            const ssnHasErrors = hasErrors(touched.ssn, errors.ssn);
+            const ssnHasErrors = hasErrors(touched.SSN, errors.SSN);
             // @ts-ignore
-            const dobHasErrors = hasErrors(touched.dob, errors.dob);
-            const monthlyIncomeHasErrors = hasErrors(
-              touched.monthlyIncome,
-              errors.monthlyIncome
+            const DOBHasErrors = hasErrors(touched.DOB, errors.DOB);
+            const MonthlyIncomeHasErrors = hasErrors(
+              touched.MonthlyIncome,
+              errors.MonthlyIncome
             );
-            const monthlyExpensesHasErrors = hasErrors(
-              touched.monthlyExpenses,
-              errors.monthlyExpenses
+            const MonthlyExpenseHasErrors = hasErrors(
+              touched.MonthlyExpense,
+              errors.MonthlyExpense
             );
-            const emailHasErrors = hasErrors(touched.email, errors.email);
-            const phoneNumberHasErrors = hasErrors(
-              touched.phoneNumber,
-              errors.phoneNumber
+            const EmailAddressHasErrors = hasErrors(
+              touched.EmailAddress,
+              errors.EmailAddress
+            );
+            const phoneHasErrors = hasErrors(
+              touched.CellPhone,
+              errors.CellPhone
             );
 
             const inputErrorStyle = (hasError: boolean): StyleType =>
@@ -140,61 +151,61 @@ export const ApplicationForm: FC = () => {
               <Form className={styles.form}>
                 <div className={styles.row}>
                   <div className={styles.inputContainer}>
-                    <label htmlFor="firstName">First name</label>
+                    <label htmlFor="FirstName">First name</label>
                     <Field
                       placeholder="First name"
-                      name="firstName"
+                      name="FirstName"
                       type="text"
                       className={inputErrorStyle(firstNameHasErrors)}
                     />
                     {firstNameHasErrors && (
-                      <div className={styles.error}>{errors.firstName}</div>
+                      <div className={styles.error}>{errors.FirstName}</div>
                     )}
                   </div>
                   <div className={styles.inputContainer}>
-                    <label htmlFor="middleName">Middle name</label>
+                    <label htmlFor="MiddleName">Middle name</label>
                     <Field
                       placeholder="Middle name"
-                      name="middleName"
+                      name="MiddleName"
                       type="text"
                       className={styles.input}
                     />
                   </div>
 
                   <div className={styles.inputContainer}>
-                    <label htmlFor="lastName">Last name</label>
+                    <label htmlFor="LastName">Last name</label>
                     <Field
-                      name="lastName"
+                      name="LastName"
                       type="text"
                       placeholder="Last name"
-                      className={inputErrorStyle(lastNameHasErrors)}
+                      className={inputErrorStyle(LastNameHasErrors)}
                     />
-                    {lastNameHasErrors && (
-                      <div className={styles.error}>{errors.lastName}</div>
+                    {LastNameHasErrors && (
+                      <div className={styles.error}>{errors.LastName}</div>
                     )}
                   </div>
                 </div>
                 <div className={styles.row}>
                   <div className={styles.inputContainer}>
-                    <label htmlFor="ssn">SSN#*</label>
+                    <label htmlFor="SSN">SSN#*</label>
                     <Field
                       placeholder="SSN"
-                      name="ssn"
+                      name="SSN"
                       type="number"
                       className={inputErrorStyle(ssnHasErrors)}
                     />
                     {ssnHasErrors && (
-                      <div className={styles.error}>{errors.ssn}</div>
+                      <div className={styles.error}>{errors.SSN}</div>
                     )}
                   </div>
                   <div className={styles.inputContainer}>
-                    <label htmlFor="dob">DOB</label>
+                    <label htmlFor="DOB">DOB</label>
                     <DatePickerField
-                      name="dob"
-                      className={inputErrorStyle(dobHasErrors)}
+                      name="DOB"
+                      className={inputErrorStyle(DOBHasErrors)}
                     />
-                    {dobHasErrors && (
-                      <div className={styles.error}>{errors.dob}</div>
+                    {DOBHasErrors && (
+                      <div className={styles.error}>{errors.DOB}</div>
                     )}
                   </div>
                 </div>
@@ -208,28 +219,28 @@ export const ApplicationForm: FC = () => {
                 </div>
                 <div className={styles.row}>
                   <div className={styles.inputContainer}>
-                    <label htmlFor="monthlyIncome">Monthly income</label>
+                    <label htmlFor="MonthlyIncome">Monthly income</label>
                     <Field
                       placeholder="Monthly income"
-                      name="monthlyIncome"
+                      name="MonthlyIncome"
                       type="number"
-                      className={inputErrorStyle(monthlyIncomeHasErrors)}
+                      className={inputErrorStyle(MonthlyIncomeHasErrors)}
                     />
-                    {monthlyIncomeHasErrors && (
-                      <div className={styles.error}>{errors.monthlyIncome}</div>
+                    {MonthlyIncomeHasErrors && (
+                      <div className={styles.error}>{errors.MonthlyIncome}</div>
                     )}
                   </div>
                   <div className={styles.inputContainer}>
-                    <label htmlFor="monthlyExpenses">Monthly expenses</label>
+                    <label htmlFor="MonthlyExpense">Monthly expenses</label>
                     <Field
                       placeholder="Monthly expenses"
-                      name="monthlyExpenses"
+                      name="MonthlyExpense"
                       type="number"
-                      className={inputErrorStyle(monthlyExpensesHasErrors)}
+                      className={inputErrorStyle(MonthlyExpenseHasErrors)}
                     />
-                    {monthlyExpensesHasErrors && (
+                    {MonthlyExpenseHasErrors && (
                       <div className={styles.error}>
-                        {errors.monthlyExpenses}
+                        {errors.MonthlyExpense}
                       </div>
                     )}
                   </div>
@@ -244,26 +255,26 @@ export const ApplicationForm: FC = () => {
                 </div>
                 <div className={styles.row}>
                   <div className={styles.inputContainer}>
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="EmailAddress">EmailAddress</label>
                     <Field
-                      placeholder="Email"
-                      name="email"
+                      placeholder="EmailAddress"
+                      name="EmailAddress"
                       type="text"
-                      className={inputErrorStyle(emailHasErrors)}
+                      className={inputErrorStyle(EmailAddressHasErrors)}
                     />
-                    {emailHasErrors && (
-                      <div className={styles.error}>{errors.email}</div>
+                    {EmailAddressHasErrors && (
+                      <div className={styles.error}>{errors.EmailAddress}</div>
                     )}
                   </div>
                   <div className={styles.inputContainer}>
-                    <label htmlFor="phoneNumber">Phone number</label>
+                    <label htmlFor="CellPhone">Phone number</label>
                     <MaskedInput
-                      name="phoneNumber"
+                      name="CellPhone"
                       placeholder="Phone number"
-                      className={inputErrorStyle(phoneNumberHasErrors)}
+                      className={inputErrorStyle(phoneHasErrors)}
                     />
-                    {phoneNumberHasErrors && (
-                      <div className={styles.error}>{errors.phoneNumber}</div>
+                    {phoneHasErrors && (
+                      <div className={styles.error}>{errors.CellPhone}</div>
                     )}
                   </div>
                 </div>

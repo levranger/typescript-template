@@ -15,7 +15,7 @@ const Notifications: FC = () => {
   const user = useSelector(userSelector);
   const notifications = useSelector(notificationsSelector);
 
-  useEffect(() => void dispatch(loadNotifications(user.ID)), []);
+  useEffect(() => void dispatch(loadNotifications(user?.ID)), []);
   return (
     <div className={styles.wrapper}>
       <AdminSidebar />

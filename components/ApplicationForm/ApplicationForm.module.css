@@ -53,6 +53,7 @@
 .input {
     margin-right:15px;
     padding: 5px 7px;
+    border: 1px solid black;
 }
 
 .errorInput {

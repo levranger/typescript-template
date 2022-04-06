@@ -19,3 +19,5 @@ export * from './AddDealerForm/AddDealerForm';
 export * from './InputBar/InputBar';
 export * from './EditDealerForm/EditDealerForm';
 export * from './DealerFormTitleBar/DealerFormTitleBar';
+export * from './DealerCard/DealerCard';
+export * from './EditDealerContent/EditDealerContent';

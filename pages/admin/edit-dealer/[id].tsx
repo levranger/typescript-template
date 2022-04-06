@@ -11,6 +11,7 @@ import {
 } from '../../../components';
 import { withAuth } from '../../../hocs';
 import {
+  adminDashboardSelector,
   dealerItemSelector,
   loadDealer,
   loadStates,
@@ -28,6 +29,7 @@ const EditDealer: FC = () => {
 
   const router = useRouter();
 
+  const { pending } = useSelector(adminDashboardSelector);
   const user = useSelector(userSelector);
   const dealerItem = useSelector(dealerItemSelector);
   const states = useSelector(stateSelector);
@@ -42,14 +44,11 @@ const EditDealer: FC = () => {
       dispatch(loadDealer({ userid: Number(user?.ID), dealerid: Number(id) }));
     }
   }, [id]);
-
-  console.log(dealerItem);
-
   const handleChangeMode = (editMode: EditType) => () => setMode(editMode);
   const handleSubmit = (values: Partial<DealerInterface>): void => {
     dispatch(
       updateDealers({
-        payload: { ...values, userid: Number(user.ID), dealerid: Number(id) },
+        payload: { ...values, userid: Number(user?.ID), dealerid: Number(id) },
         router,
       })
     );
@@ -64,6 +63,7 @@ const EditDealer: FC = () => {
       <AdminSidebar />
       {mode === 'VIEW' && (
         <EditDealerForm
+          pending={pending}
           dealerData={dealerItem}
           onBack={handleBack}
           onEdit={handleChangeMode('EDIT')}
@@ -71,6 +71,7 @@ const EditDealer: FC = () => {
       )}
       {mode === 'EDIT' && (
         <AddDealerForm
+          pending={pending}
           onSubmit={handleSubmit}
           states={states}
           onBack={handleBack}

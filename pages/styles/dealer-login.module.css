@@ -14,6 +14,11 @@
     justify-content: center;
 
 }
+
+.input {
+    border: 1px solid black;
+
+}
 .left {
     background-color: #F9F7F4;
     height: 35rem;
@@ -91,4 +96,9 @@ border: none;
         height: 20rem;
 
     }
+}
+
+.loaderWrapper {
+    margin: 25px auto;
+    width: 100px;
 }

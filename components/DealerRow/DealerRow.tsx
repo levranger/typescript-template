@@ -5,7 +5,9 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import styles from './DealerRow.module.css';
 import { ApplicationInterface } from '../../contracts';
 
-type Props = Partial<ApplicationInterface>;
+interface Props extends Partial<ApplicationInterface> {
+  onEditClick: (id: string) => () => void;
+}
 
 export const DealerRow: FC<Props> = ({
   FirstName,
@@ -15,9 +17,11 @@ export const DealerRow: FC<Props> = ({
   VehicleModel,
   VehicleMake,
   VehicleYear,
+  ID,
   PurchasePrice,
   VIN,
   Status,
+  onEditClick,
   isShown,
 }) => {
   if (!isShown) return null;
@@ -37,7 +41,10 @@ export const DealerRow: FC<Props> = ({
       <td>{PurchasePrice}</td>
       <td>{VIN}</td>
       <td>{Status}</td>
-      <td>
+      <td
+        className={styles.rowButton}
+        onClick={onEditClick(ApplicationID.toString())}
+      >
         <FontAwesomeIcon icon={faArrowRight as IconProp} color="darkgrey" />
       </td>
     </tr>

@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import styles from './ApplicationsTable.module.css';
 import { DealerHeader } from '../DealerHeader/DealerHeader';
 import { DealerRow } from '../DealerRow/DealerRow';
@@ -28,6 +29,8 @@ export const ApplicationsTable: FC<Props> = ({
   title,
 }) => {
   const [searchParam, setSearchParam] = useState<string>('');
+
+  const router = useRouter();
 
   const dispatch = useDispatch();
 
@@ -69,6 +72,8 @@ export const ApplicationsTable: FC<Props> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setSearchParam(e.target.value.toLocaleLowerCase());
+  const handleRowEdit = (id: string) => () =>
+    void router.push(`application/${id}`);
 
   return (
     <div className={styles.wrapper}>
@@ -97,9 +102,12 @@ export const ApplicationsTable: FC<Props> = ({
             </thead>
             <tbody>
               {applications.map((item) => (
-                <DealerRow key={item.ID} {...item} />
+                <DealerRow
+                  key={item.ID}
+                  {...item}
+                  onEditClick={handleRowEdit}
+                />
               ))}
-              <DealerRow />
             </tbody>
           </table>
         </div>

@@ -11,16 +11,22 @@ interface Props {
   dealerData: DealerInterface;
   onBack: OnEventFn;
   onEdit: OnEventFn;
+  pending: boolean;
 }
 
-export const EditDealerForm: FC<Props> = ({ dealerData, onBack, onEdit }) => {
+export const EditDealerForm: FC<Props> = ({
+  pending,
+  dealerData,
+  onBack,
+  onEdit,
+}) => {
   return (
     <div className={styles.wrapper}>
       <DealerHeader title="Admin" />
       <div className={styles.contents}>
         <DealerFormTitleBar onBack={onBack} />
         <div className={styles.infoContainer}>
-          {!dealerData ? (
+          {!dealerData || pending ? (
             <Oval
               secondaryColor="black"
               wrapperClass={styles.loader}

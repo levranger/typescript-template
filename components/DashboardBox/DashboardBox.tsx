@@ -3,7 +3,10 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cx from 'classnames';
 import styles from './DashboardBox.module.css';
-import { DashboardBoxEnum } from '../../contracts';
+import {
+  DashboardApplicationInterface,
+  DashboardBoxEnum,
+} from '../../contracts';
 
 interface Props {
   icon: IconProp;
@@ -15,16 +18,17 @@ interface Props {
 export const getTextStyle = (type: DashboardBoxEnum): string => {
   switch (type) {
     case DashboardBoxEnum.Failed:
-      return styles.textFailed;
+      return cx(styles.textFailed, styles.text);
 
     case DashboardBoxEnum.Pending:
-      return styles.textPending;
+      return cx(styles.textPending, styles.text);
 
     case DashboardBoxEnum.Success:
-      return styles.textSuccess;
+      return cx(styles.textSuccess, styles.text);
 
     case DashboardBoxEnum.Notification:
-      return styles.textNotification;
+      return cx(styles.textNotification, styles.text);
+
     default:
       return '';
   }
@@ -53,7 +57,7 @@ export const DashboardBox: FC<Props> = ({ icon, text, count, type }) => {
         <FontAwesomeIcon icon={icon} />
       </div>
       <div>
-        <span>{text}</span> <br />
+        <p className={styles.paragraph}>{text}</p> <br />
         <h2 className={getTextStyle(type)}> {count} </h2>
       </div>
     </div>

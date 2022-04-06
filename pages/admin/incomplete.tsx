@@ -18,7 +18,7 @@ const Incomplete: FC = () => {
   const user = useSelector(userSelector);
   const incompleteApplications = useSelector(incompleteApplicationsSelector);
 
-  useEffect(() => void dispatch(loadIncompleteApplications(user.ID)), []);
+  useEffect(() => void dispatch(loadIncompleteApplications(user?.ID)), []);
   return (
     <div className={styles.wrapper}>
       <AdminSidebar />

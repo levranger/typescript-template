@@ -3,6 +3,10 @@
     margin-bottom: 40px;
     border: 0.2rem solid #E9E9E9;
     border-radius: 10px;
+
+}
+
+.innerWrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -47,4 +51,34 @@
 .button:hover {
     background-color: #203f98;
 
+}
+
+.table {
+    margin-top: 20px;
+    width: 100%;    border-collapse: separate;
+    border-spacing: 0 0.2rem;
+
+}
+
+.table thead tr th {
+    border-top: 0.1rem solid #EBEAED;
+    width: 30%;
+    padding: 10px 24px;
+    font-size: 12px;
+    line-height: 1.21;
+    font-weight: 500;
+    background: #F9F9FB;
+}
+
+.table tbody tr td {
+    border: 0;
+    vertical-align: middle;
+    padding: 10px 27px 10px;
+    font-size: 16px;
+    line-height: 1.15;
+    background: #FAFAFF;
+}
+
+.rowButton {
+    cursor: pointer;
 }

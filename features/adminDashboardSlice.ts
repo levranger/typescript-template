@@ -1,17 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Simulate } from 'react-dom/test-utils';
 import {
   ApplicationInterface,
+  ContractInterface,
   CreateDealerArgsInterface,
+  DashboardApplicationInterface,
   DealerInterface,
   LoadDealerArgsInterface,
   NotificationInterface,
   StateInterface,
+  StatsInterface,
 } from '../contracts';
 import { RootState } from '../app/store';
 
 import { addNotification } from './notifications/notificationSlice';
-import load = Simulate.load;
 
 type AdminDashboardState = {
   approvedApplications: ApplicationInterface[];
@@ -21,6 +22,10 @@ type AdminDashboardState = {
   dealers: DealerInterface[];
   dealerItem: DealerInterface;
   states: StateInterface[];
+  stats: StatsInterface;
+  dashboardApplications: DashboardApplicationInterface[];
+  applicationItem: ApplicationInterface;
+  contractsTypes: ContractInterface[];
   pending: boolean;
   error: boolean;
   errorMessage: string;
@@ -35,8 +40,17 @@ const initialState: AdminDashboardState = {
   states: [],
   notifications: [],
   pending: false,
+  stats: {
+    'Incomplete Applications': 0,
+    'Approved Applications': 0,
+    'Awaiting Approval Applications': 0,
+    'Declined Applications': 0,
+  },
+  dashboardApplications: [],
+  applicationItem: null,
   error: false,
   errorMessage: '',
+  contractsTypes: [],
 };
 
 export const loadApprovedApplications = createAsyncThunk(
@@ -191,6 +205,84 @@ export const updateDealers = createAsyncThunk(
   }
 );
 
+// Convert array of stats to object
+const convertArrayToObject = (array, key): any => {
+  const initialValue = {};
+  return array.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item[key]]: item.Value,
+    };
+  }, initialValue);
+};
+
+export const loadStats = createAsyncThunk(
+  'adminDashboard/loadStats',
+  async (userId: string) => {
+    const res = await fetch('https://tlcfin.prestoapi.com/api/getstats', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      body: JSON.stringify({ userid: Number(userId) }),
+    });
+    const response = await res.json();
+
+    return convertArrayToObject(response, 'Description');
+  }
+);
+
+export const loadDashboard = createAsyncThunk(
+  'adminDashboad/loadDashboard',
+  async (userId: string) => {
+    const res = await fetch('https://tlcfin.prestoapi.com/api/getDashboard', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      body: JSON.stringify({ userid: Number(userId) }),
+    });
+    const result: DashboardApplicationInterface[] = await res.json();
+
+    return result;
+  }
+);
+
+export const loadApplication = createAsyncThunk(
+  'adminDashboard/loadApplication',
+  async (id: string) => {
+    const res = await fetch('https://tlcfin.prestoapi.com/api/application', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      body: JSON.stringify({ id: Number(id) }),
+    });
+    const response: ApplicationInterface[] = await res.json();
+
+    return response[0];
+  }
+);
+
+export const loadContractTypes = createAsyncThunk(
+  'adminDashboard/loadContractTypes',
+  async () => {
+    const res = await fetch('https://tlcfin.prestoapi.com/api/contracttypes', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+    const response: ContractInterface[] = await res.json();
+
+    return response;
+  }
+);
+
 export const dealerDashboardSlice = createSlice({
   name: 'adminDashboard',
   initialState,
@@ -328,13 +420,59 @@ export const dealerDashboardSlice = createSlice({
         state.pending = true;
       })
       .addCase(loadDealer.fulfilled, (state, { payload }) => {
-        state.pending = false;
         state.dealerItem = payload;
+        state.pending = false;
       })
       .addCase(loadDealer.rejected, (state, { payload }) => {
         state.pending = false;
         state.error = true;
         state.errorMessage = 'Loading dealer failed';
+      })
+      .addCase(loadStats.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(loadStats.rejected, (state) => {
+        state.pending = false;
+        state.error = true;
+        state.errorMessage = 'Error loading stats';
+      })
+      .addCase(loadStats.fulfilled, (state, { payload }) => {
+        state.pending = false;
+        state.stats = payload;
+      })
+      .addCase(loadDashboard.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(loadDashboard.rejected, (state) => {
+        state.pending = false;
+        state.error = true;
+        state.errorMessage = 'Loading dashboard failed';
+      })
+      .addCase(loadDashboard.fulfilled, (state, { payload }) => {
+        state.pending = false;
+        state.dashboardApplications = payload;
+      })
+      .addCase(loadApplication.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(loadApplication.rejected, (state) => {
+        state.pending = false;
+        state.error = true;
+        state.errorMessage = 'Loading application failed';
+      })
+      .addCase(loadApplication.fulfilled, (state, { payload }) => {
+        state.pending = false;
+        state.applicationItem = payload;
+      })
+      .addCase(loadContractTypes.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(loadContractTypes.rejected, (state) => {
+        state.error = true;
+        state.errorMessage = 'Loading contracts types failed';
+      })
+      .addCase(loadContractTypes.fulfilled, (state, { payload }) => {
+        state.contractsTypes = payload;
       });
   },
 });
@@ -345,6 +483,9 @@ export const {
   setDealersAction,
   setPendingApplicationsAction,
 } = dealerDashboardSlice.actions;
+
+export const adminDashboardSelector = (state: RootState): AdminDashboardState =>
+  state.adminDashboard;
 
 export const approvedApplicationsSelector = (
   state: RootState

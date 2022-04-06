@@ -7,5 +7,20 @@
 }
 .tableRow {
     margin-bottom: 70px;
+}
 
+.green {
+    color:#4cd504
+}
+
+.orange {
+    color: #ff9200 !important;
+}
+
+.red {
+    color: red
+}
+
+.rowButton {
+    cursor: pointer;
 }

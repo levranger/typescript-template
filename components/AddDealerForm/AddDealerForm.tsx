@@ -3,6 +3,7 @@ import { Field, Formik } from 'formik';
 import cx from 'classnames';
 import * as Yup from 'yup';
 import { cs, OnEventFn, StyleType } from '@rnw-community/shared';
+import { Oval } from 'react-loader-spinner';
 import { DealerHeader } from '../DealerHeader/DealerHeader';
 import styles from './AddDealerForm.module.css';
 import { InputBar } from '../InputBar/InputBar';
@@ -30,6 +31,7 @@ interface Props {
   onSubmit: OnEventFn;
   states: StateInterface[];
   onBack: OnEventFn;
+  pending: boolean;
   initialValues: Partial<DealerInterface>;
 }
 
@@ -37,6 +39,7 @@ export const AddDealerForm: FC<Props> = ({
   onSubmit,
   states,
   onBack,
+  pending,
   initialValues,
 }) => {
   return (
@@ -87,134 +90,155 @@ export const AddDealerForm: FC<Props> = ({
 
             return (
               <div className={styles.dealerForm}>
-                <InputBar
-                  name="Name"
-                  title="Name"
-                  hasError={nameHasErrors}
-                  error={errors?.Name}
-                />
-                <div className={styles.inputBar}>
-                  <div>
-                    <p>Address</p>
-                    <Field
-                      name="Address"
-                      className={inputErrorStyle(addressHasErrors)}
-                      placeholder="Address"
+                {!pending ? (
+                  <>
+                    {' '}
+                    <InputBar
+                      name="Name"
+                      title="Name"
+                      hasError={nameHasErrors}
+                      error={errors?.Name}
                     />
-                    {addressHasErrors && (
-                      <div className={styles.errorText}>{errors.Address}</div>
-                    )}
-                  </div>
-                  <div>
-                    <p>City</p>
-                    <Field
-                      className={inputErrorStyle(CityHasErrors)}
-                      placeholder="City"
-                      name="City"
-                    />
-                    {CityHasErrors && (
-                      <div className={styles.errorText}>{errors.City}</div>
-                    )}
-                  </div>
-                  <div>
-                    <p>State</p>
-                    <Field
-                      as="select"
-                      className={styles.input}
-                      name="State"
-                      defaultValue={states[0]?.State}
-                    >
-                      {states.map((item) => (
-                        <option
-                          key={item.State}
-                          label={item.State}
-                          value={item.Short}
+                    <div className={styles.inputBar}>
+                      <div>
+                        <p>Address</p>
+                        <Field
+                          name="Address"
+                          className={inputErrorStyle(addressHasErrors)}
+                          placeholder="Address"
                         />
-                      ))}
-                    </Field>
-                  </div>
-                </div>
-                <InputBar
-                  name="License"
-                  title="License"
-                  hasError={LicenseHasErrors}
-                  error={errors.License}
-                />
-                <div className={styles.inputBar}>
-                  <div className={styles.phoneInputWrapper}>
-                    <MaskedInput
-                      name="WorkPhone"
-                      className={inputErrorStyle(phoneHasErrors)}
-                      placeholder="Phone"
-                    />
-                    {phoneHasErrors && (
-                      <div className={styles.errorText}>{errors.WorkPhone}</div>
-                    )}
-                  </div>
-                  <div className={styles.phoneInputWrapper}>
-                    <Field
-                      name="EXT"
-                      type="text"
-                      placeholder="EXT"
-                      className={inputErrorStyle(extHasErrors)}
-                    />
-                    {extHasErrors && (
-                      <div className={styles.errorText}>{errors.EXT}</div>
-                    )}
-                  </div>
-                </div>
-                <InputBar
-                  name="Website"
-                  title="Website"
-                  hasError={WebsiteHasErrors}
-                  error={errors.Website}
-                />
-                <InputBar
-                  name="EmailAddress"
-                  title="EmailAddress"
-                  hasError={EmailAddressHasErrors}
-                  error={errors.EmailAddress}
-                />
-                <div className={styles.inputBar}>
-                  <div className={styles.phoneInputWrapper}>
-                    <Field
-                      type="text"
-                      name="ContactFirstName"
-                      placeholder="Contact first name"
-                      className={inputErrorStyle(contactFirstNameHasErrors)}
-                    />
-                    {contactFirstNameHasErrors && (
-                      <div className={styles.errorText}>
-                        {errors.ContactFirstName}
+                        {addressHasErrors && (
+                          <div className={styles.errorText}>
+                            {errors.Address}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
+                      <div>
+                        <p>City</p>
+                        <Field
+                          className={inputErrorStyle(CityHasErrors)}
+                          placeholder="City"
+                          name="City"
+                        />
+                        {CityHasErrors && (
+                          <div className={styles.errorText}>{errors.City}</div>
+                        )}
+                      </div>
+                      <div>
+                        <p>State</p>
+                        <Field
+                          as="select"
+                          className={styles.input}
+                          name="State"
+                          defaultValue={states[0]?.State}
+                        >
+                          {states.map((item) => (
+                            <option
+                              key={item.State}
+                              label={item.State}
+                              value={item.Short}
+                            />
+                          ))}
+                        </Field>
+                      </div>
+                    </div>
+                    <InputBar
+                      name="License"
+                      title="License"
+                      hasError={LicenseHasErrors}
+                      error={errors.License}
+                    />
+                    <div className={styles.inputBar}>
+                      <div className={styles.phoneInputWrapper}>
+                        <MaskedInput
+                          name="WorkPhone"
+                          className={inputErrorStyle(phoneHasErrors)}
+                          placeholder="Phone"
+                        />
+                        {phoneHasErrors && (
+                          <div className={styles.errorText}>
+                            {errors.WorkPhone}
+                          </div>
+                        )}
+                      </div>
+                      <div className={styles.phoneInputWrapper}>
+                        <Field
+                          name="EXT"
+                          type="text"
+                          placeholder="EXT"
+                          className={inputErrorStyle(extHasErrors)}
+                        />
+                        {extHasErrors && (
+                          <div className={styles.errorText}>{errors.EXT}</div>
+                        )}
+                      </div>
+                    </div>
+                    <InputBar
+                      name="Website"
+                      title="Website"
+                      hasError={WebsiteHasErrors}
+                      error={errors.Website}
+                    />
+                    <InputBar
+                      name="EmailAddress"
+                      title="EmailAddress"
+                      hasError={EmailAddressHasErrors}
+                      error={errors.EmailAddress}
+                    />
+                    <div className={styles.inputBar}>
+                      <div className={styles.phoneInputWrapper}>
+                        <Field
+                          type="text"
+                          name="ContactFirstName"
+                          placeholder="Contact first name"
+                          className={inputErrorStyle(contactFirstNameHasErrors)}
+                        />
+                        {contactFirstNameHasErrors && (
+                          <div className={styles.errorText}>
+                            {errors.ContactFirstName}
+                          </div>
+                        )}
+                      </div>
 
-                  <div className={styles.phoneInputWrapper}>
-                    <Field
-                      type="text"
-                      name="ContactLastName"
-                      placeholder="Contact last name"
-                      className={inputErrorStyle(contactLastNameHasErrors)}
-                    />
-                    {contactLastNameHasErrors && (
-                      <div className={styles.errorText}>
-                        {errors.ContactLastName}
+                      <div className={styles.phoneInputWrapper}>
+                        <Field
+                          type="text"
+                          name="ContactLastName"
+                          placeholder="Contact last name"
+                          className={inputErrorStyle(contactLastNameHasErrors)}
+                        />
+                        {contactLastNameHasErrors && (
+                          <div className={styles.errorText}>
+                            {errors.ContactLastName}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                </div>
-                <InputBar
-                  title="Contact position"
-                  name="ContactPosition"
-                  hasError={contactPositionHasErrors}
-                  error={errors.ContactPosition}
-                />
-                <div className={styles.inputBar}>
-                  <button onClick={submitForm} className={styles.saveButton}>
-                    Save
-                  </button>
-                </div>
+                    </div>
+                    <InputBar
+                      title="Contact position"
+                      name="ContactPosition"
+                      hasError={contactPositionHasErrors}
+                      error={errors.ContactPosition}
+                    />
+                    <div className={styles.inputBar}>
+                      <button
+                        onClick={submitForm}
+                        type="submit"
+                        className={styles.saveButton}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <Oval
+                    secondaryColor="black"
+                    wrapperClass={styles.loader}
+                    width={80}
+                    height={80}
+                    color="black"
+                  />
+                )}
               </div>
             );
           }}

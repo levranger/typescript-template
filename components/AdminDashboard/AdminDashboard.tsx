@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FC } from 'react';
 import {
   faBell,
-  faCalendar,
   faCheck,
   faEdit,
   faInfoCircle,
@@ -13,10 +12,18 @@ import { useRouter } from 'next/router';
 import { DealerHeader } from '../DealerHeader/DealerHeader';
 import styles from './AdminDashboard.module.css';
 import { DashboardBox } from '../DashboardBox/DashboardBox';
-import { DashboardBoxEnum } from '../../contracts';
+import {
+  DashboardApplicationInterface,
+  DashboardBoxEnum,
+  StatsInterface,
+} from '../../contracts';
 import { DashboardBar } from '../DashboardBar/DashboardBar';
 
-export const AdminDashboard: FC = () => {
+interface Props {
+  stats: StatsInterface;
+  dashboardApplications: DashboardApplicationInterface[];
+}
+export const AdminDashboard: FC<Props> = ({ stats, dashboardApplications }) => {
   const router = useRouter();
 
   const handleNavigate = (route: string) => () => void router.push(route);
@@ -33,19 +40,19 @@ export const AdminDashboard: FC = () => {
         <div className={styles.boxWrapper}>
           <DashboardBox
             icon={faCheck as IconProp}
-            count={15}
+            count={stats['Awaiting Approval Applications']}
             text="Awaiting Review"
             type={DashboardBoxEnum.Pending}
           />
           <DashboardBox
             icon={faEdit as IconProp}
-            count={15}
+            count={stats['Approved Applications']}
             text="Approved applications"
             type={DashboardBoxEnum.Success}
           />
           <DashboardBox
             icon={faMinusCircle as IconProp}
-            count={15}
+            count={stats['Incomplete Applications']}
             text="Incomplete Applications"
             type={DashboardBoxEnum.Failed}
           />
@@ -54,6 +61,9 @@ export const AdminDashboard: FC = () => {
           <DashboardBar
             onNavigate={handleNavigate('/admin/pending')}
             icon={faEdit as IconProp}
+            applications={dashboardApplications.filter(
+              (item) => item.StatusID === 1
+            )}
             text="Awaiting review"
             description="No Awaiting Review Applications Last 7 Days"
             type={DashboardBoxEnum.Pending}
@@ -65,6 +75,9 @@ export const AdminDashboard: FC = () => {
             type={DashboardBoxEnum.Notification}
           />
           <DashboardBar
+            applications={dashboardApplications.filter(
+              (item) => item.StatusID === 5
+            )}
             onNavigate={handleNavigate('/admin/incomplete')}
             icon={faMinusCircle as IconProp}
             text="New Incomplete Application"

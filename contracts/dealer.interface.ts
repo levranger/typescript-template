@@ -14,6 +14,7 @@ export interface DealerInterface {
   LastUpdatedBy: number;
   License: string;
   Name: string;
+  Phone: string;
   PostalCode: string;
   State: string;
   Website: string;

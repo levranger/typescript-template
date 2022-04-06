@@ -6,6 +6,7 @@ import { AddDealerForm, AdminSidebar } from '../../components';
 import { withAuth } from '../../hocs';
 import { DealerInterface } from '../../contracts';
 import {
+  adminDashboardSelector,
   loadStates,
   stateSelector,
   updateDealers,
@@ -31,6 +32,7 @@ export const initialDealerFormValues = {
 const AddDealer: FC = () => {
   const dispatch = useDispatch();
 
+  const { pending } = useSelector(adminDashboardSelector);
   const user = useSelector(userSelector);
   const states = useSelector(stateSelector);
 
@@ -41,7 +43,7 @@ const AddDealer: FC = () => {
   const handleSubmit = (values: Partial<DealerInterface>): void => {
     dispatch(
       updateDealers({
-        payload: { ...values, userid: Number(user.ID), dealerid: 0 },
+        payload: { ...values, userid: Number(user?.ID), dealerid: 0 },
         router,
       })
     );
@@ -52,6 +54,7 @@ const AddDealer: FC = () => {
     <div className={styles.wrapper}>
       <AdminSidebar />
       <AddDealerForm
+        pending={pending}
         initialValues={initialDealerFormValues}
         onSubmit={handleSubmit}
         states={states}

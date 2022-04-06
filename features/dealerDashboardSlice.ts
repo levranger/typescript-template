@@ -1,9 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  ApplicationInterface,
-  DealerInterface,
-  NotificationInterface,
-} from '../contracts';
+import { ApplicationInterface, NotificationInterface } from '../contracts';
 import { RootState } from '../app/store';
 
 type DashboardState = {

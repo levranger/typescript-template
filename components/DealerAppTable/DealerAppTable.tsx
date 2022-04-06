@@ -5,6 +5,7 @@ import { faFile } from '@fortawesome/fontawesome-free-solid';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { isArray } from 'util';
+import { useRouter } from 'next/router';
 import { DealerHeader } from '../DealerHeader/DealerHeader';
 import styles from './DealerAppTable.module.css';
 import { DealerRow } from '../DealerRow/DealerRow';
@@ -20,10 +21,12 @@ export const DealerAppTable: FC = () => {
 
   const dispatch = useDispatch();
 
+  const router = useRouter();
+
   const user = useSelector(userSelector);
   const applications = useSelector(applicationsSelector);
 
-  useEffect(() => void dispatch(loadApplications(user.ID)), []);
+  useEffect(() => void dispatch(loadApplications(user?.ID)), []);
   useEffect(() => {
     const result = applications.map((item) => {
       if (
@@ -45,6 +48,8 @@ export const DealerAppTable: FC = () => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setSearchParam(e.target.value.toLowerCase());
+  const handleRowEdit = (id: string) => (): Promise<boolean> =>
+    router.push(`/admin/application/${id}-`);
 
   return (
     <div className={styles.wrapper}>
@@ -86,7 +91,9 @@ export const DealerAppTable: FC = () => {
         </thead>
         <tbody>
           {isArray(applications) &&
-            applications.map((item) => <DealerRow key={item.ID} {...item} />)}
+            applications.map((item) => (
+              <DealerRow key={item.ID} {...item} onEditClick={handleRowEdit} />
+            ))}
         </tbody>
       </table>
     </div>

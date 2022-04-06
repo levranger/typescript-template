@@ -9,7 +9,7 @@ type Props = {
 
 export const NotificationList: FC = ({ children }: Props) => {
   return (
-    <Portal.Root>
+    <Portal.Root style={{ position: 'fixed' }}>
       <AnimateSharedLayout>
         <ul
           aria-live="assertive"

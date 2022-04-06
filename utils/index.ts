@@ -1,1 +1,1 @@
-import * from './hasErrors';
+import * as hasErrors from './hasErrors';

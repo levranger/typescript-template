@@ -1,10 +1,16 @@
 import React, { FC } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt } from '@fortawesome/fontawesome-free-solid';
+import {
+  faArrowRight,
+  faCalendarAlt,
+} from '@fortawesome/fontawesome-free-solid';
 import { isNotEmptyString, OnEventFn } from '@rnw-community/shared';
 import styles from './DashboardBar.module.css';
-import { DashboardBoxEnum } from '../../contracts';
+import {
+  DashboardApplicationInterface,
+  DashboardBoxEnum,
+} from '../../contracts';
 import { getTextStyle } from '../DashboardBox/DashboardBox';
 
 interface Props {
@@ -13,6 +19,7 @@ interface Props {
   description?: string;
   type: DashboardBoxEnum;
   onNavigate: OnEventFn;
+  applications?: DashboardApplicationInterface[];
 }
 
 export const DashboardBar: FC<Props> = ({
@@ -21,25 +28,54 @@ export const DashboardBar: FC<Props> = ({
   text,
   description,
   onNavigate,
+  applications,
 }) => {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.content}>
-        <span className={getTextStyle(type)}>
-          <FontAwesomeIcon className={styles.icon} icon={icon} />
-          <span className={styles.label}>{text}</span>
-        </span>
-        <span className={styles.calendarText}>
-          <FontAwesomeIcon icon={faCalendarAlt as IconProp} />
-          <span className={styles.calendarTextLabel}>Last 7 days</span>
-        </span>
-        {isNotEmptyString(description) && (
-          <span className={styles.description}>{description}</span>
-        )}
+      <div className={styles.innerWrapper}>
+        <div className={styles.content}>
+          <span className={getTextStyle(type)}>
+            <FontAwesomeIcon className={styles.icon} icon={icon} />
+            <span className={styles.label}>{text}</span>
+          </span>
+          <span className={styles.calendarText}>
+            <FontAwesomeIcon icon={faCalendarAlt as IconProp} />
+            <span className={styles.calendarTextLabel}>Last 7 days</span>
+          </span>
+          {isNotEmptyString(description) && (
+            <span className={styles.description}>{description}</span>
+          )}
+        </div>
+        <div className={styles.button} onClick={onNavigate}>
+          View more
+        </div>
       </div>
-      <div className={styles.button} onClick={onNavigate}>
-        View more
-      </div>
+      {Boolean(applications?.length) && (
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Application #</th>
+              <th>Name</th>
+              <th>Dealership</th>
+              <th>Date</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {applications.map((item) => (
+              <tr>
+                <td>{item.ID}</td>
+                <td>{item.Name}</td>
+                <td>{item.Description}</td>
+                <td>{item.LastUpdated}</td>
+                <td className={styles.rowButton}>
+                  <FontAwesomeIcon icon={faArrowRight as IconProp} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

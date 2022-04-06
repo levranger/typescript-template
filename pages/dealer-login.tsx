@@ -6,6 +6,7 @@ import { cs, StyleType } from '@rnw-community/shared';
 import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { Oval } from 'react-loader-spinner';
 import styles from './styles/dealer-login.module.css';
 import Logo from '../assets/images/logo.png';
 import car from '../assets/images/img.png';
@@ -95,8 +96,19 @@ const DealerLogin: FC = () => {
                   {passwordHasErrors && (
                     <div className={styles.error}>{errors.password}</div>
                   )}
-
-                  <button type="submit">LOGIN</button>
+                  {pending ? (
+                    <div className={styles.loaderWrapper}>
+                      <Oval
+                        secondaryColor="black"
+                        wrapperClass={styles.loader}
+                        width={80}
+                        height={80}
+                        color="black"
+                      />
+                    </div>
+                  ) : (
+                    <button type="submit">LOGIN</button>
+                  )}
                   {error && !pending && (
                     <div className={styles.errorCred}>{errorMessage}</div>
                   )}

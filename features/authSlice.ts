@@ -1,8 +1,13 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { isDefined } from '@rnw-community/shared';
-import { Router } from 'next/router';
 import { RootState } from '../app/store';
-import { LoginPayloadInterface, UserInterface } from '../contracts';
+import {
+  AddUserArgsInterface,
+  DealerInterface,
+  LoginPayloadInterface,
+  UserInterface,
+} from '../contracts';
+import { addNotification } from './notifications/notificationSlice';
 
 // here we are typing the types for the state
 type AuthState = {
@@ -10,6 +15,8 @@ type AuthState = {
   pending: boolean;
   error: boolean;
   errorMessage: string;
+  applicationDealers: DealerInterface[];
+  approvalCode: number | string;
 };
 
 const initialState: AuthState = {
@@ -20,6 +27,8 @@ const initialState: AuthState = {
   pending: false,
   error: false,
   errorMessage: '',
+  approvalCode: null,
+  applicationDealers: [],
 };
 
 export const sendLoginRequest = createAsyncThunk(
@@ -33,6 +42,44 @@ export const sendLoginRequest = createAsyncThunk(
 
     const response: UserInterface = await res.json();
     return response;
+  }
+);
+
+export const addUser = createAsyncThunk(
+  'dashboard/addUser',
+  async ({ payload, router }: AddUserArgsInterface, thunkApi) => {
+    const res = await fetch('https://tlcfin.prestoapi.com/api/addUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      body: JSON.stringify(payload),
+    });
+    const response: [{ ApprovalCode: string }] = await res.json();
+
+    if (response[0].ApprovalCode === 'Account Exists') {
+      thunkApi.dispatch(
+        addNotification({
+          type: 'error',
+          autoHideDuration: 6000,
+          message: 'Account already exists',
+        })
+      );
+    }
+    router.push('/approved');
+
+    return response[0].ApprovalCode;
+  }
+);
+
+export const loadApplicationDealers = createAsyncThunk(
+  'dashboard/LoadApplicationDealers',
+  async () => {
+    const response = await fetch('https://tlcfin.prestoapi.com/api/dealers');
+    const result: DealerInterface[] = await response.json();
+
+    return result;
   }
 );
 
@@ -64,6 +111,30 @@ export const authSlice = createSlice({
         state.pending = false;
         state.error = true;
         state.errorMessage = 'Invalid credentials';
+      })
+      .addCase(addUser.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(addUser.rejected, (state) => {
+        state.pending = false;
+        state.error = true;
+        state.errorMessage = 'Adding user failed';
+      })
+      .addCase(addUser.fulfilled, (state, { payload }) => {
+        state.approvalCode = payload;
+        state.pending = false;
+      })
+      .addCase(loadApplicationDealers.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(loadApplicationDealers.rejected, (state) => {
+        state.pending = false;
+        state.error = true;
+        state.errorMessage = 'Loading dealers failed';
+      })
+      .addCase(loadApplicationDealers.fulfilled, (state, { payload }) => {
+        state.pending = false;
+        state.applicationDealers = payload;
       });
   },
 });
@@ -75,5 +146,10 @@ export const isAuthorizedSelector = (state: RootState): boolean =>
   isDefined(state.auth.user);
 export const userSelector = (state: RootState): UserInterface | null =>
   state.auth.user;
+export const approvalCodeSelector = (state: RootState): number | string =>
+  state.auth.approvalCode;
+export const applicationDealersSelector = (
+  state: RootState
+): DealerInterface[] => state.auth.applicationDealers;
 
 export default authSlice.reducer;

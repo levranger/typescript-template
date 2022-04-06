@@ -25,7 +25,7 @@ export const DealerContent: FC = () => {
 
   const router = useRouter();
 
-  useEffect(() => void dispatch(loadDealers(user.ID)), []);
+  useEffect(() => void dispatch(loadDealers(user?.ID)), []);
   useEffect(() => {
     const result = dealers.map((item) => {
       if (
