@@ -21,3 +21,4 @@ export * from './EditDealerForm/EditDealerForm';
 export * from './DealerFormTitleBar/DealerFormTitleBar';
 export * from './DealerCard/DealerCard';
 export * from './EditDealerContent/EditDealerContent';
+export * from './EditDealerApplication/EditDealerApplication';
