@@ -11,10 +11,12 @@ export interface ApplicationInterface {
   Country: string;
   DLNumber: string;
   DLState: string;
-  DOB: string;
+  DOB: Date;
+  SSN: string;
   DateAdded: string;
   DealerID: number;
   Deleted: boolean;
+  ContractTypeID: number;
   DepositFloat: number;
   EmailAddress: string;
   EmployerName: string;
@@ -30,6 +32,8 @@ export interface ApplicationInterface {
   MonthlyHousingPayment: number;
   MonthlyIncome: number;
   Password: string;
+  NotesCount: number;
+  NotesStatusID: string;
   Position: string;
   PositionType: string;
   PostalCode: string;

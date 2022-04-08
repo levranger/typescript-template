@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import { Field, Form, Formik, useField, useFormikContext } from 'formik';
 import InputMask from 'react-input-mask';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as Yup from 'yup';
 import { cs, OnEventFn, StyleType } from '@rnw-community/shared';
 import cx from 'classnames';
 import styles from './ApplicationForm.module.css';
 import { hasErrors } from '../../utils/hasErrors';
+import { DatePickerField } from '../DatePicker/DatePickerField';
 
 interface GenericPropsInterface {
   name: string;
@@ -30,25 +30,6 @@ const validationSchema = Yup.object({
   EmailAddress: Yup.string().trim().required('EmailAddress is required'),
   CellPhone: Yup.string().trim().required('Phone number is required'),
 });
-
-const DatePickerField: FC<GenericPropsInterface> = ({ name, className }) => {
-  const { setFieldValue } = useFormikContext();
-  const [field] = useField(name);
-
-  return (
-    <DatePicker
-      selected={field.value}
-      className={className}
-      dateFormatCalendar="MMM yyyy"
-      minDate={new Date(1990)}
-      maxDate={new Date()}
-      showYearDropdown
-      onChange={(val) => {
-        setFieldValue(field.name, val);
-      }}
-    />
-  );
-};
 
 export const MaskedInput: FC<GenericPropsInterface> = ({
   placeholder,

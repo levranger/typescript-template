@@ -11,3 +11,5 @@ export * from './add-user-args.interface';
 export * from './stats.interface';
 export * from './dashboard-application.interface';
 export * from './contract.interface';
+export * from './document-type.interface';
+export * from './update-application.interface';

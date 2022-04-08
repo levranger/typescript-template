@@ -1,5 +1,7 @@
 .wrapper {
-    flex: 1
+    flex: 1;
+    height: 100vh;
+    overflow-y: scroll;
 }
 
 .content {
@@ -22,6 +24,10 @@
 
 .orange {
     color: #FAAD00;
+}
+
+.rowTitle {
+    margin-top: 40px;
 }
 
 .loaderWrapper {
@@ -56,8 +62,9 @@
 }
 
 .select {
-    padding: 15px;
+    padding: 11.6px 10px;
     border: 1px solid black;
+    width: 100%;
 }
 
 .button {
@@ -113,23 +120,52 @@
 
 .formRow {
     display: flex;
-    margin-top: 50px;
+    margin-top: 30px;
     justify-content: space-between;
 }
 
 .input {
     border: 1px solid  black;
     padding: 10px 15px;
-    width: 90%;
+    width: 100%;
+}
+
+.errorInput {
+    border: 1px solid  red;
+    padding: 10px 15px;
+    width: 100%;
 }
 
 
+.error {
+    color: red
+}
+
 .inputBox {
-    flex: 1
+    flex: 1;
+    margin-left: 10px;
 }
 
 
 .form {
     display: flex;
     flex-direction: column;
+    max-width: 620px;
+
+}
+
+.required {
+    color: red;
+    font-size: 14px;
+}
+
+
+@media (max-width: 670px) {
+    .formWrapper {
+        padding: 10px 15px;
+    }
+
+    .formRow {
+        flex-direction: column;
+    }
 }

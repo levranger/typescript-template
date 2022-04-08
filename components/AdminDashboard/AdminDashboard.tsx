@@ -26,6 +26,13 @@ interface Props {
 export const AdminDashboard: FC<Props> = ({ stats, dashboardApplications }) => {
   const router = useRouter();
 
+  const incompleteApplications = dashboardApplications.filter(
+    (item) => item.StatusID === 5
+  );
+  const awaitingApproveApplications = dashboardApplications.filter(
+    (item) => item.StatusID === 1
+  );
+
   const handleNavigate = (route: string) => () => void router.push(route);
   return (
     <div className={styles.wrapper}>
@@ -61,11 +68,13 @@ export const AdminDashboard: FC<Props> = ({ stats, dashboardApplications }) => {
           <DashboardBar
             onNavigate={handleNavigate('/admin/pending')}
             icon={faEdit as IconProp}
-            applications={dashboardApplications.filter(
-              (item) => item.StatusID === 1
-            )}
+            applications={awaitingApproveApplications}
             text="Awaiting review"
-            description="No Awaiting Review Applications Last 7 Days"
+            description={`${
+              awaitingApproveApplications.length < 1
+                ? 'No New Applications Last 7 Days'
+                : `${awaitingApproveApplications.length} Applications`
+            }  `}
             type={DashboardBoxEnum.Pending}
           />
           <DashboardBar
@@ -75,13 +84,15 @@ export const AdminDashboard: FC<Props> = ({ stats, dashboardApplications }) => {
             type={DashboardBoxEnum.Notification}
           />
           <DashboardBar
-            applications={dashboardApplications.filter(
-              (item) => item.StatusID === 5
-            )}
+            applications={incompleteApplications}
             onNavigate={handleNavigate('/admin/incomplete')}
             icon={faMinusCircle as IconProp}
             text="New Incomplete Application"
-            description="No New Applications Last 7 Days"
+            description={`${
+              incompleteApplications.length < 1
+                ? 'No New Applications Last 7 Days'
+                : `${incompleteApplications.length} Applications`
+            }  `}
             type={DashboardBoxEnum.Failed}
           />
         </div>

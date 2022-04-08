@@ -1,14 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { isDefined } from '@rnw-community/shared';
 import {
   ApplicationInterface,
+  ChangeApplicationStatusArgs,
   ContractInterface,
   CreateDealerArgsInterface,
   DashboardApplicationInterface,
   DealerInterface,
+  DocumentTypeInterface,
   LoadDealerArgsInterface,
   NotificationInterface,
   StateInterface,
   StatsInterface,
+  UpdateApplicationInterface,
 } from '../contracts';
 import { RootState } from '../app/store';
 
@@ -26,6 +30,7 @@ type AdminDashboardState = {
   dashboardApplications: DashboardApplicationInterface[];
   applicationItem: ApplicationInterface;
   contractsTypes: ContractInterface[];
+  documentTypes: DocumentTypeInterface[];
   pending: boolean;
   error: boolean;
   errorMessage: string;
@@ -48,6 +53,7 @@ const initialState: AdminDashboardState = {
   },
   dashboardApplications: [],
   applicationItem: null,
+  documentTypes: [],
   error: false,
   errorMessage: '',
   contractsTypes: [],
@@ -283,6 +289,135 @@ export const loadContractTypes = createAsyncThunk(
   }
 );
 
+export const loadDocumentTypes = createAsyncThunk(
+  'adminDashboard/loadDocumentTypes',
+  async () => {
+    const res = await fetch(
+      'https://tlcfin.prestoapi.com/api/getdocumenttypes',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    );
+    const response: DocumentTypeInterface[] = await res.json();
+
+    return response;
+  }
+);
+
+export const generatePdf = createAsyncThunk(
+  'adminDashboard/generatePdf',
+  async (id: number) => {
+    const res = await fetch(`https://tlcpdf.3nom.com/api/GeneratePdf/${id}`, {
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+
+    const response: { url: string } = await res.json();
+
+    window.open(response.url, '_blank');
+  }
+);
+export const updateApplication = createAsyncThunk(
+  'adminDashboard/updateApplication',
+  async (payload: UpdateApplicationInterface, thunkApi) => {
+    const body = {
+      Address: payload.Address,
+      AmountFinanced: payload.AmountFinanced,
+      ApplicationID: payload.ApplicationID,
+      CellPhone: payload.CellPhone,
+      City: payload.City,
+      DLNumber: payload.DLNumber,
+      DOB: payload.DOB,
+      DepositFloat: payload.DepositFloat,
+      EmailAddress: payload.EmailAddress,
+      EmployerName: payload.EmployerName,
+      FirstName: payload.FirstName,
+      HousingStatus: payload.HousingStatus,
+      HowLong: payload.HowLong,
+      LastName: payload.LastName,
+      MiddleName: payload.MiddleName,
+      MonthlyHousingPayment: payload.MonthlyHousingPayment,
+      MonthlyIncome: payload.MonthlyIncome,
+      Position: payload.Position,
+      PositionType: payload.PositionType,
+      PostalCode: payload.PostalCode,
+      PurchasePrice: payload.PurchasePrice,
+      State: payload.State,
+      VIN: payload.VIN,
+      VehicleColor: payload.VehicleColor,
+      VehicleEngine: payload.VehicleEngine,
+      VehicleHorsePower: payload.VehicleHorsePower,
+      VehicleMake: payload.VehicleMake,
+      VehicleMileage: payload.VehicleMileage,
+      VehicleModel: payload.VehicleModel,
+      VehicleTransmission: payload.VehicleTransmission,
+      VehicleYear: payload.VehicleYear,
+      WorkPhone: payload.WorkPhone,
+      YearsAtCurrentJob: payload.YearsAtCurrentJob,
+      userId: payload.userid,
+    };
+
+    const response = await fetch(
+      'https://tlcfin.prestoapi.com/api/updateapplication',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        body: JSON.stringify(body),
+      }
+    );
+
+    const res = await response.json();
+
+    if (res[0].Message === 'Success') {
+      thunkApi.dispatch(
+        addNotification({
+          type: 'success',
+          message: 'Application has been updated',
+          autoHideDuration: 6000,
+        })
+      );
+      thunkApi.dispatch(loadApplication(payload.ApplicationID.toString()));
+    }
+  }
+);
+
+export const changeApplicationStatus = createAsyncThunk(
+  'adminDashboard/changeApplicationStatus',
+  async (payload: ChangeApplicationStatusArgs, thunkApi) => {
+    const response = await fetch(
+      'https://tlcfin.prestoapi.com/api/changeappstatus',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    const res = await response.json();
+
+    if (isDefined(res[0].Message)) {
+      thunkApi.dispatch(
+        addNotification({
+          type: 'success',
+          autoHideDuration: 6000,
+          message: 'Application has been updated',
+        })
+      );
+      thunkApi.dispatch(loadApplication(payload.appid as unknown as string));
+    }
+  }
+);
+
 export const dealerDashboardSlice = createSlice({
   name: 'adminDashboard',
   initialState,
@@ -333,10 +468,12 @@ export const dealerDashboardSlice = createSlice({
       .addCase(loadPendingApplications.fulfilled, (state, { payload }) => {
         state.pending = false;
         state.pendingApplications = payload;
-        state.pendingApplications = state.pendingApplications.map((item) => ({
-          ...item,
-          isShown: true,
-        }));
+        state.pendingApplications = state.pendingApplications.length
+          ? state.pendingApplications.map((item) => ({
+              ...item,
+              isShown: true,
+            }))
+          : [];
       })
       .addCase(loadPendingApplications.rejected, (state, { payload }) => {
         state.pending = false;
@@ -473,6 +610,37 @@ export const dealerDashboardSlice = createSlice({
       })
       .addCase(loadContractTypes.fulfilled, (state, { payload }) => {
         state.contractsTypes = payload;
+      })
+      .addCase(loadDocumentTypes.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(loadDocumentTypes.rejected, (state) => {
+        state.error = true;
+        state.errorMessage = 'Loading document types failed';
+        state.pending = false;
+      })
+      .addCase(loadDocumentTypes.fulfilled, (state, { payload }) => {
+        state.documentTypes = payload;
+        state.pending = false;
+      })
+      .addCase(changeApplicationStatus.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(changeApplicationStatus.rejected, (state) => {
+        state.pending = false;
+        state.errorMessage = 'Failed changing application status';
+        state.error = true;
+      })
+      .addCase(updateApplication.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(updateApplication.rejected, (state) => {
+        state.pending = false;
+        state.error = true;
+        state.errorMessage = 'Updating application failed';
+      })
+      .addCase(updateApplication.fulfilled, (state) => {
+        state.pending = false;
       });
   },
 });
