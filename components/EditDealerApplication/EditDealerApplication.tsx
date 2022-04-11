@@ -103,16 +103,16 @@ export const MaskedInput: FC<GenericPropsInterface> = ({
 export const EditDealerApplication: FC = () => {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <h1>Update Account (Profile #)</h1>
-        <button>Notes</button>
+      <div className={styles.headerContainer}>
+        <h1 className={styles.blue}>Update Account (Profile #)</h1>
+        <div className={styles.buttonContainer2}>
+          <button type="submit">SAVE</button>
+        </div>
       </div>
 
-      <div className={styles.steps}>
-        <div>
-          <h4>Approval Code</h4>
-          <p>01</p>
-        </div>
+      <div className={styles.steps01}>
+        <h4 className={styles.margeR}>01 Approval Code</h4>
+
         <h4>10001</h4>
       </div>
       <Formik
@@ -176,6 +176,68 @@ export const EditDealerApplication: FC = () => {
             touched.EmailAddress,
             errors.EmailAddress
           );
+          const CellPhoneHasErrors = hasErrors(
+            touched.CellPhone,
+            errors.CellPhone
+          );
+
+          const CityHasErrors = hasErrors(touched.City, errors.City);
+          const StateHasErrors = hasErrors(touched.State, errors.State);
+          const ZipCodeHasErrors = hasErrors(touched.ZipCode, errors.ZipCode);
+          const HousingStatusHasErrors = hasErrors(
+            touched.HousingStatus,
+            errors.HousingStatus
+          );
+          const TimeAtAddressHasErrors = hasErrors(
+            touched.TimeAtAddress,
+            errors.TimeAtAddress
+          );
+          const MonthlyPaymentHasErrors = hasErrors(
+            touched.MonthlyPayment,
+            errors.MonthlyPayment
+          );
+          const CompanyNameHasErrors = hasErrors(
+            touched.CompanyName,
+            errors.CompanyName
+          );
+          const WorkPhoneHasErrors = hasErrors(
+            touched.WorkPhone,
+            errors.WorkPhone
+          );
+          const PositionHasErrors = hasErrors(
+            touched.Position,
+            errors.Position
+          );
+          const EmploymentStatusHasErrors = hasErrors(
+            touched.EmploymentStatus,
+            errors.EmploymentStatus
+          );
+          const YearsAtCompanyHasErrors = hasErrors(
+            touched.YearsAtCompany,
+            errors.YearsAtCompany
+          );
+
+          const VINHasErrors = hasErrors(touched.VIN, errors.VIN);
+          const YearHasErrors = hasErrors(touched.Year, errors.Year);
+          const MakeHasErrors = hasErrors(touched.Make, errors.Make);
+          const ModelHasErrors = hasErrors(touched.Model, errors.Model);
+
+          const MileageHasErrors = hasErrors(touched.Mileage, errors.Mileage);
+          const EngineHasErrors = hasErrors(touched.Engine, errors.Engine);
+          const TransmissionHasErrors = hasErrors(
+            touched.Transmission,
+            errors.Transmission
+          );
+          const ColorHasErrors = hasErrors(touched.Color, errors.Color);
+          const PurchasePriceHasErrors = hasErrors(
+            touched.PurchasePrice,
+            errors.PurchasePrice
+          );
+          const DepositHasErrors = hasErrors(touched.Deposit, errors.Deposit);
+          const AmountFinancedHasErrors = hasErrors(
+            touched.AmountFinanced,
+            errors.AmountFinanced
+          );
           const phoneHasErrors = hasErrors(touched.CellPhone, errors.CellPhone);
           const inputErrorStyle = (hasError: boolean): StyleType =>
             cs(
@@ -185,9 +247,15 @@ export const EditDealerApplication: FC = () => {
             );
           return (
             <Form className={styles.form}>
+              <div className={styles.steps}>
+                <p>02</p>
+                <h2>Personal Details</h2>
+              </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="FirstName">First name</label>
+                  <label className={styles.formLabel} htmlFor="FirstName">
+                    First name <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
                     placeholder="First name"
                     name="FirstName"
@@ -199,7 +267,9 @@ export const EditDealerApplication: FC = () => {
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MiddleName">Middle name</label>
+                  <label className={styles.formLabel} htmlFor="MiddleName">
+                    Middle name <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
                     placeholder="Middle name"
                     name="MiddleName"
@@ -209,7 +279,9 @@ export const EditDealerApplication: FC = () => {
                 </div>
 
                 <div className={styles.inputContainer}>
-                  <label htmlFor="LastName">Last name</label>
+                  <label className={styles.formLabel} htmlFor="LastName">
+                    Last name <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
                     name="LastName"
                     type="text"
@@ -223,7 +295,9 @@ export const EditDealerApplication: FC = () => {
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="EmailAddress">EmailAddress</label>
+                  <label className={styles.formLabel} htmlFor="EmailAddress">
+                    Email Address <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
                     placeholder="EmailAddress"
                     name="EmailAddress"
@@ -235,7 +309,9 @@ export const EditDealerApplication: FC = () => {
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="CellPhone">Phone number</label>
+                  <label className={styles.formLabel} htmlFor="CellPhone">
+                    Phone number <span className={styles.asterisk}>*</span>
+                  </label>
                   <MaskedInput
                     name="CellPhone"
                     placeholder="Phone number"
@@ -248,7 +324,9 @@ export const EditDealerApplication: FC = () => {
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="SSN">SSN#*</label>
+                  <label className={styles.formLabel} htmlFor="SSN">
+                    SSN# <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
                     placeholder="SSN"
                     name="SSN"
@@ -260,7 +338,9 @@ export const EditDealerApplication: FC = () => {
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="Driver License">Driver License</label>
+                  <label className={styles.formLabel} htmlFor="Driver License">
+                    Driver License <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
                     placeholder="Driver License"
                     name="DriverLicense"
@@ -274,7 +354,9 @@ export const EditDealerApplication: FC = () => {
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="DOB">DOB</label>
+                  <label className={styles.formLabel} htmlFor="DOB">
+                    DOB <span className={styles.asterisk}>*</span>
+                  </label>
                   <DatePickerField
                     name="DOB"
                     className={inputErrorStyle(DOBHasErrors)}
@@ -285,14 +367,15 @@ export const EditDealerApplication: FC = () => {
                 </div>
               </div>
               <div className={styles.docs}>
-                <div>
+                <div className={styles.steps}>
                   <h2>Upload Documents</h2>
-                  <p>02</p>
                 </div>
 
                 <div className={styles.row}>
                   <div className={styles.inputContainer}>
-                    <label htmlFor="MonthlyIncome">Monthly income</label>
+                    <label className={styles.formLabel} htmlFor="MonthlyIncome">
+                      Monthly income <span className={styles.asterisk}>*</span>
+                    </label>
                     <Field
                       placeholder="Monthly income"
                       name="MonthlyIncome"
@@ -306,52 +389,52 @@ export const EditDealerApplication: FC = () => {
                 </div>
               </div>
               <div className={styles.docs}>
-                <div>
-                  <h2>Residence Details</h2>
+                <div className={styles.steps}>
                   <p>04</p>
+                  <h2>Residence Details</h2>
                 </div>
 
                 <div className={styles.row}>
-                  <div className={styles.inputContainer}>
-                    <label htmlFor="MonthlyIncome">Primary Address</label>
-                    <Field
-                      placeholder="Monthly income"
-                      name="MonthlyIncome"
-                      type="number"
-                      className={inputErrorStyle(MonthlyIncomeHasErrors)}
-                    />
-                    <Field
-                      name="MonthlyIncome"
-                      type="number"
-                      className={inputErrorStyle(MonthlyIncomeHasErrors)}
-                    />
-                    {MonthlyIncomeHasErrors && (
-                      <div className={styles.error}>{errors.MonthlyIncome}</div>
-                    )}
-                  </div>
-                </div>
-                <div className={styles.row}>
-                  <div className={styles.inputContainer}>
-                    <label htmlFor="MonthlyIncome">Monthly income</label>
-                    <Field
-                      placeholder="Monthly income"
-                      name="MonthlyIncome"
-                      type="number"
-                      className={inputErrorStyle(MonthlyIncomeHasErrors)}
-                    />
-                    {MonthlyIncomeHasErrors && (
-                      <div className={styles.error}>{errors.MonthlyIncome}</div>
-                    )}
+                  <div className={styles.column}>
+                    <div className={styles.inputContainer}>
+                      <label
+                        className={styles.formLabel}
+                        htmlFor="MonthlyIncome"
+                      >
+                        Primary Address{' '}
+                        <span className={styles.asterisk}>*</span>
+                      </label>
+                      <Field
+                        placeholder="Address"
+                        name="Address"
+                        type="text"
+                        className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                      />
+                    </div>
+                    <div className={styles.inputContainer2}>
+                      <Field
+                        name="MonthlyIncome"
+                        type="text"
+                        className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                      />
+                      {MonthlyIncomeHasErrors && (
+                        <div className={styles.error}>
+                          {errors.MonthlyIncome}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">City</label>
+                  <label className={styles.formLabel} htmlFor="City">
+                    City <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
+                    placeholder="City"
+                    name="City"
+                    type="text"
                     className={inputErrorStyle(MonthlyIncomeHasErrors)}
                   />
                   {MonthlyIncomeHasErrors && (
@@ -359,143 +442,172 @@ export const EditDealerApplication: FC = () => {
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">State</label>
+                  <label className={styles.formLabel} htmlFor="State">
+                    State <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    placeholder="State"
+                    name="State"
+                    type="text"
+                    className={inputErrorStyle(StateHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {StateHasErrors && (
+                    <div className={styles.error}>{errors.State}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Zip Code</label>
+                  <label className={styles.formLabel} htmlFor="ZipCode">
+                    Zip Code <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    placeholder="Zip Code"
+                    name="ZipCode"
+                    type="text"
+                    className={inputErrorStyle(ZipCodeHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {ZipCodeHasErrors && (
+                    <div className={styles.error}>{errors.ZipCode}</div>
                   )}
                 </div>
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Housing Status</label>
+                  <label className={styles.formLabel} htmlFor="Housing Status">
+                    Housing Status <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    placeholder="Housing Status"
+                    name="HousingStatus"
+                    type="text"
+                    className={inputErrorStyle(HousingStatusHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {HousingStatusHasErrors && (
+                    <div className={styles.error}>{errors.HousingStatus}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Time at this address</label>
+                  <label className={styles.formLabel} htmlFor="TimeAtAddress">
+                    Time at this address
+                    <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
+                    placeholder="Time at this address"
+                    name="TimeAtAddress"
                     type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    className={inputErrorStyle(TimeAtAddressHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {TimeAtAddressHasErrors && (
+                    <div className={styles.error}>{errors.TimeAtAddress}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Monthly Housing Payment</label>
+                  <label className={styles.formLabel} htmlFor="MonthlyPayment">
+                    Monthly Housing Payment
+                    <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
+                    placeholder="Monthly Housing Payment"
+                    name="MonthlyHousingPayment"
                     type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    className={inputErrorStyle(MonthlyPaymentHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {MonthlyPaymentHasErrors && (
+                    <div className={styles.error}>{errors.MonthlyPayment}</div>
                   )}
                 </div>
               </div>
 
               <div className={styles.docs}>
-                <div>
+                <div className={styles.steps}>
+                  <p>05</p>
                   <h2>Employment Details</h2>
-                  <p>05</p>
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Company Name</label>
+                  <label className={styles.formLabel} htmlFor="CompanyName">
+                    Company Name <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    placeholder="Company Name"
+                    name="CompanyName"
+                    type="text"
+                    className={inputErrorStyle(CompanyNameHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {CompanyNameHasErrors && (
+                    <div className={styles.error}>{errors.CompanyName}</div>
                   )}
                 </div>
               </div>
 
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Work Phone</label>
+                  <label className={styles.formLabel} htmlFor="WorkPhone">
+                    Work Phone <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    placeholder="Work Phone"
+                    name="WorkPhone"
+                    type="text"
+                    className={inputErrorStyle(WorkPhoneHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {WorkPhoneHasErrors && (
+                    <div className={styles.error}>{errors.WorkPhone}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Position</label>
+                  <label className={styles.formLabel} htmlFor="Position">
+                    Position <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    placeholder="Position"
+                    name="Position"
+                    type="text"
+                    className={inputErrorStyle(PositionHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
-                  )}
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Employment Status</label>
-                  <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
-                  />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
-                  )}
-                </div>
-                <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Years at company</label>
-                  <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
-                  />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {PositionHasErrors && (
+                    <div className={styles.error}>{errors.Position}</div>
                   )}
                 </div>
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Monthly income</label>
+                  <label
+                    className={styles.formLabel}
+                    htmlFor="EmploymentStatus"
+                  >
+                    Employment Status <span className={styles.asterisk}>*</span>
+                  </label>
+                  <Field
+                    placeholder="Employment Status"
+                    name="EmploymentStatus"
+                    type="select"
+                    className={inputErrorStyle(EmploymentStatusHasErrors)}
+                  />
+                  {EmploymentStatusHasErrors && (
+                    <div className={styles.error}>
+                      {errors.EmploymentStatus}
+                    </div>
+                  )}
+                </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.formLabel} htmlFor="YearsAtCompany">
+                    Years at company <span className={styles.asterisk}>*</span>
+                  </label>
+                  <Field
+                    placeholder="Years at company"
+                    name="YearsAtCompany"
+                    type="text"
+                    className={inputErrorStyle(YearsAtCompanyHasErrors)}
+                  />
+                  {YearsAtCompanyHasErrors && (
+                    <div className={styles.error}>{errors.YearsAtCompany}</div>
+                  )}
+                </div>
+              </div>
+              <div className={styles.row}>
+                <div className={styles.inputContainer}>
+                  <label className={styles.formLabel} htmlFor="MonthlyIncome">
+                    Monthly income <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
                     placeholder="Monthly income"
                     name="MonthlyIncome"
@@ -508,149 +620,171 @@ export const EditDealerApplication: FC = () => {
                 </div>
               </div>
               <div className={styles.docs}>
-                <div>
-                  <h2>Vehicle Details</h2>
+                <div className={styles.steps}>
                   <p>05</p>
+                  <h2>Vehicle Details</h2>
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">17 Digits VIN</label>
+                  <label className={styles.formLabel} htmlFor="VIN">
+                    17 Digits VIN <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
+                    placeholder="VIN"
+                    name="VIN"
                     type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    className={inputErrorStyle(VINHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {VINHasErrors && (
+                    <div className={styles.error}>{errors.VIN}</div>
                   )}
                 </div>
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Year</label>
+                  <label className={styles.formLabel} htmlFor="Year">
+                    Year <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
+                    placeholder="Year"
+                    name="Year"
                     type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    className={inputErrorStyle(YearHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {YearHasErrors && (
+                    <div className={styles.error}>{errors.Year}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Make</label>
+                  <label className={styles.formLabel} htmlFor="Make">
+                    Make <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    placeholder="Make"
+                    name="Make"
+                    type="text"
+                    className={inputErrorStyle(MakeHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {MakeHasErrors && (
+                    <div className={styles.error}>{errors.Make}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Model</label>
+                  <label className={styles.formLabel} htmlFor="Model">
+                    Model <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    placeholder="Model"
+                    name="Model"
+                    type="text"
+                    className={inputErrorStyle(ModelHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
-                  )}
-                </div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Mileage</label>
-                  <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
-                  />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
-                  )}
-                </div>
-                <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Engine</label>
-                  <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
-                  />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
-                  )}
-                </div>
-                <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Transmission</label>
-                  <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
-                  />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {ModelHasErrors && (
+                    <div className={styles.error}>{errors.Model}</div>
                   )}
                 </div>
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Color</label>
+                  <label className={styles.formLabel} htmlFor="Mileage">
+                    Mileage <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    placeholder="Mileage"
+                    name="Mileage"
+                    type="text"
+                    className={inputErrorStyle(MileageHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {MileageHasErrors && (
+                    <div className={styles.error}>{errors.Mileage}</div>
+                  )}
+                </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.formLabel} htmlFor="Engine">
+                    Engine <span className={styles.asterisk}>*</span>
+                  </label>
+                  <Field
+                    placeholder="Engine"
+                    name="Engine"
+                    type="type"
+                    className={inputErrorStyle(EngineHasErrors)}
+                  />
+                  {EngineHasErrors && (
+                    <div className={styles.error}>{errors.Engine}</div>
+                  )}
+                </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.formLabel} htmlFor="Transmission">
+                    Transmission <span className={styles.asterisk}>*</span>
+                  </label>
+                  <Field
+                    placeholder="Transmission"
+                    name="Transmission"
+                    type="text"
+                    className={inputErrorStyle(TransmissionHasErrors)}
+                  />
+                  {TransmissionHasErrors && (
+                    <div className={styles.error}>{errors.Transmission}</div>
+                  )}
+                </div>
+              </div>
+              <div className={styles.row}>
+                <div className={styles.inputContainer}>
+                  <label className={styles.formLabel} htmlFor="Color">
+                    Color <span className={styles.asterisk}>*</span>
+                  </label>
+                  <Field
+                    placeholder="Color"
+                    name="Color"
+                    type="text"
+                    className={inputErrorStyle(ColorHasErrors)}
+                  />
+                  {ColorHasErrors && (
+                    <div className={styles.error}>{errors.Color}</div>
                   )}
                 </div>
               </div>
 
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Purchase Price</label>
+                  <label className={styles.formLabel} htmlFor="PurchasePrice">
+                    Purchase Price <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
-                    type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    placeholder="Purchase Price"
+                    name="PurchasePrice"
+                    type="text"
+                    className={inputErrorStyle(PurchasePriceHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {PurchasePriceHasErrors && (
+                    <div className={styles.error}>{errors.PurchasePrice}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Deposit</label>
+                  <label className={styles.formLabel} htmlFor="Deposit">
+                    Deposit <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
+                    placeholder="Deposit"
+                    name="Deposit"
                     type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    className={inputErrorStyle(DepositHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {DepositHasErrors && (
+                    <div className={styles.error}>{errors.Deposit}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label htmlFor="MonthlyIncome">Amount Financed</label>
+                  <label className={styles.formLabel} htmlFor="Amount Financed">
+                    Amount Financed <span className={styles.asterisk}>*</span>
+                  </label>
                   <Field
-                    placeholder="Monthly income"
-                    name="MonthlyIncome"
+                    placeholder="Amount Financed"
+                    name="AmountFinanced"
                     type="number"
-                    className={inputErrorStyle(MonthlyIncomeHasErrors)}
+                    className={inputErrorStyle(AmountFinancedHasErrors)}
                   />
-                  {MonthlyIncomeHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyIncome}</div>
+                  {AmountFinancedHasErrors && (
+                    <div className={styles.error}>{errors.AmountFinanced}</div>
                   )}
                 </div>
               </div>
