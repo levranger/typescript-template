@@ -26,7 +26,7 @@ export const ApplicationApproveModal: FC<Props> = ({ closeModal, onSave }) => {
   ): void => setLeaseNotes(e.target.value);
 
   const handleSave = (payload: Partial<ChangeApplicationStatusArgs>) => () => {
-    closeModal();
+    closeModal(null);
     onSave(payload)();
   };
 

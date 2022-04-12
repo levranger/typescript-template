@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { Field, Form, Formik, useField, useFormikContext } from 'formik';
-import InputMask from 'react-input-mask';
+import { Field, Form, Formik } from 'formik';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as Yup from 'yup';
 import { cs, OnEventFn, StyleType } from '@rnw-community/shared';
@@ -8,12 +7,7 @@ import cx from 'classnames';
 import styles from './ApplicationForm.module.css';
 import { hasErrors } from '../../utils/hasErrors';
 import { DatePickerField } from '../DatePicker/DatePickerField';
-
-interface GenericPropsInterface {
-  name: string;
-  className: StyleType;
-  placeholder?: string;
-}
+import { MaskedInput } from '../MaskedInput/MaskedInput';
 
 const validationSchema = Yup.object({
   FirstName: Yup.string().trim().required('First name is required'),
@@ -30,31 +24,6 @@ const validationSchema = Yup.object({
   EmailAddress: Yup.string().trim().required('EmailAddress is required'),
   CellPhone: Yup.string().trim().required('Phone number is required'),
 });
-
-export const MaskedInput: FC<GenericPropsInterface> = ({
-  placeholder,
-  name,
-  className,
-}) => {
-  const { setFieldValue, setFieldTouched } = useFormikContext();
-  const [field] = useField(name);
-
-  return (
-    <InputMask
-      {...field}
-      type="text"
-      onBlur={(e) => setFieldValue(field.name, e.target.value, true)}
-      name="CellPhone"
-      mask="999-999-9999"
-      placeholder={placeholder}
-      className={className}
-      onChange={(e) => {
-        setFieldValue(field.name, e.target.value, true);
-        setFieldTouched(field.name);
-      }}
-    />
-  );
-};
 
 interface Props {
   onSubmit: OnEventFn;

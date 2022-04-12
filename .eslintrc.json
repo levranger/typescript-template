@@ -23,6 +23,7 @@
         "react-hooks"
     ],
     "rules":{
+        "react/no-unused-prop-types": "off",
         "react/no-unescaped-entities": "off",
         "max-len": "off",
         "react/require-default-props": "off",

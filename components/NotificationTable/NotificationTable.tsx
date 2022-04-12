@@ -1,17 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faBell } from '@fortawesome/fontawesome-free-solid';
+import { faBell } from '@fortawesome/fontawesome-free-solid';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from './NotificationTable.module.css';
 import { DealerHeader } from '../DealerHeader/DealerHeader';
 import { NotificationRow } from '../NotificationRow/NotificationRow';
-import { userSelector } from '../../features/authSlice';
-import {
-  loadNotifications,
-  notificationsSelector,
-  setNotificationsAction,
-} from '../../features/dealerDashboardSlice';
+import { setNotificationsAction } from '../../features/dealerDashboardSlice';
 import { NotificationInterface } from '../../contracts';
 
 interface Props {

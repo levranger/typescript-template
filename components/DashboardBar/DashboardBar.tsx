@@ -21,7 +21,7 @@ interface Props {
   description?: string;
   type: DashboardBoxEnum;
   onNavigate: OnEventFn;
-  onEdit: (id: string) => () => void;
+  onEdit: (id: number) => () => void;
   applications?: DashboardApplicationInterface[];
   notifications?: NotificationInterface[];
 }

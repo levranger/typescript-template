@@ -7,10 +7,10 @@ import { Oval } from 'react-loader-spinner';
 import { DealerHeader } from '../DealerHeader/DealerHeader';
 import styles from './AddDealerForm.module.css';
 import { InputBar } from '../InputBar/InputBar';
-import { MaskedInput } from '../ApplicationForm/ApplicationForm';
 import { hasErrors } from '../../utils/hasErrors';
 import { DealerInterface, StateInterface } from '../../contracts';
 import { DealerFormTitleBar } from '../DealerFormTitleBar/DealerFormTitleBar';
+import { MaskedInput } from '../MaskedInput/MaskedInput';
 
 const validationSchema = Yup.object({
   Name: Yup.string().trim().required('Name is required'),
@@ -92,7 +92,6 @@ export const AddDealerForm: FC<Props> = ({
               <div className={styles.dealerForm}>
                 {!pending ? (
                   <>
-                    {' '}
                     <InputBar
                       name="Name"
                       title="Name"

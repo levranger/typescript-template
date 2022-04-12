@@ -48,14 +48,18 @@ const EditDealerPage: FC = () => {
     void dispatch(updateApplication({ ...payload, userid: Number(user?.ID) }));
   const handleChangeAppStatus = (statusid: number) => () =>
     void dispatch(
-      changeApplicationStatus({ statusid, userId: Number(user.ID), appid: id })
+      changeApplicationStatus({
+        statusid,
+        userId: Number(user.ID),
+        appid: Number(id),
+      })
     );
   const handleApprove =
     (payload: Partial<ChangeApplicationStatusArgs>) => () => {
       dispatch(
         changeApplicationStatus({
           ...payload,
-          appid: id,
+          appid: Number(id),
           userId: Number(user.ID),
           statusid: 3,
         })

@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
-import { Field, Form, Formik, useField, useFormikContext } from 'formik';
-import InputMask from 'react-input-mask';
-import DatePicker from 'react-datepicker';
+import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import cx from 'classnames';
 import { cs, StyleType } from '@rnw-community/shared';
@@ -12,11 +10,9 @@ import { ApplicationInterface } from '../../contracts';
 import { DealerHeader } from '../DealerHeader/DealerHeader';
 import { updateApplication } from '../../features/dealerDashboardSlice';
 import { userSelector } from '../../features/authSlice';
+import { DatePickerField } from '../DatePicker/DatePickerField';
+import { MaskedInput } from '../MaskedInput/MaskedInput';
 
-interface GenericPropsInterface {
-  name: string;
-  className: StyleType;
-}
 const validationSchema = Yup.object({
   FirstName: Yup.string().trim().required('First name is required'),
   LastName: Yup.string().trim().required('Last name is required'),
@@ -57,50 +53,6 @@ const validationSchema = Yup.object({
   DepositFloat: Yup.number().required('Deposit is required'),
   AmountFinanced: Yup.number().required('Amount financed is required'),
 });
-
-const DatePickerField: FC<GenericPropsInterface> = ({ name, className }) => {
-  const { setFieldValue } = useFormikContext();
-  const [field] = useField(name);
-
-  return (
-    <DatePicker
-      selected={field.value}
-      className={className}
-      dateFormatCalendar="MMM yyyy"
-      minDate={new Date(1990)}
-      maxDate={new Date()}
-      showYearDropdown
-      onChange={(val) => {
-        setFieldValue(field.name, val);
-      }}
-    />
-  );
-};
-
-export const MaskedInput: FC<GenericPropsInterface> = ({
-  placeholder,
-  name,
-  className,
-}) => {
-  const { setFieldValue, setFieldTouched } = useFormikContext();
-  const [field] = useField(name);
-
-  return (
-    <InputMask
-      {...field}
-      type="text"
-      onBlur={(e) => setFieldValue(field.name, e.target.value, true)}
-      name="CellPhone"
-      mask="999-999-9999"
-      placeholder={placeholder}
-      className={className}
-      onChange={(e) => {
-        setFieldValue(field.name, e.target.value, true);
-        setFieldTouched(field.name);
-      }}
-    />
-  );
-};
 
 interface Props {
   initialValues: ApplicationInterface;
@@ -147,7 +99,7 @@ export const EditDealerApplication: FC<Props> = ({ initialValues }) => {
         VehicleYear: values.VehicleYear,
         WorkPhone: values.WorkPhone,
         YearsAtCurrentJob: values.YearsAtCurrentJob,
-        userId: user.ID,
+        userId: Number(user.ID),
       })
     );
   };

@@ -9,6 +9,7 @@ import {
 } from '@fortawesome/fontawesome-free-solid';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useRouter } from 'next/router';
+import { number } from 'yup';
 import { DealerHeader } from '../DealerHeader/DealerHeader';
 import styles from './AdminDashboard.module.css';
 import { DashboardBox } from '../DashboardBox/DashboardBox';
@@ -37,7 +38,7 @@ export const AdminDashboard: FC<Props> = (props) => {
   );
 
   const handleNavigate = (route: string) => () => void router.push(route);
-  const handleEdit = (id: string) => () =>
+  const handleEdit = (id: number) => () =>
     router.push(`/admin/application/${id}`);
   return (
     <div className={styles.wrapper}>
