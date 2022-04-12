@@ -37,6 +37,8 @@ export const AdminDashboard: FC<Props> = (props) => {
   );
 
   const handleNavigate = (route: string) => () => void router.push(route);
+  const handleEdit = (id: string) => () =>
+    router.push(`/admin/application/${id}`);
   return (
     <div className={styles.wrapper}>
       <DealerHeader title="Admin" />
@@ -69,6 +71,7 @@ export const AdminDashboard: FC<Props> = (props) => {
         </div>
         <div className={styles.barWrapper}>
           <DashboardBar
+            onEdit={handleEdit}
             onNavigate={handleNavigate('/admin/pending')}
             icon={faEdit as IconProp}
             applications={awaitingApproveApplications}
@@ -81,6 +84,7 @@ export const AdminDashboard: FC<Props> = (props) => {
             type={DashboardBoxEnum.Pending}
           />
           <DashboardBar
+            onEdit={handleEdit}
             onNavigate={handleNavigate('/admin/notifications')}
             icon={faBell as IconProp}
             text="Notifications"
@@ -88,6 +92,7 @@ export const AdminDashboard: FC<Props> = (props) => {
             notifications={notifications}
           />
           <DashboardBar
+            onEdit={handleEdit}
             applications={incompleteApplications}
             onNavigate={handleNavigate('/admin/incomplete')}
             icon={faMinusCircle as IconProp}

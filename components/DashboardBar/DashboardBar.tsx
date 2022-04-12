@@ -21,6 +21,7 @@ interface Props {
   description?: string;
   type: DashboardBoxEnum;
   onNavigate: OnEventFn;
+  onEdit: (id: string) => () => void;
   applications?: DashboardApplicationInterface[];
   notifications?: NotificationInterface[];
 }
@@ -31,10 +32,10 @@ export const DashboardBar: FC<Props> = ({
   text,
   description,
   onNavigate,
+  onEdit,
   notifications,
   applications,
 }) => {
-  // console.log(notifications);
   return (
     <div className={styles.wrapper}>
       <div className={styles.innerWrapper}>
@@ -80,7 +81,7 @@ export const DashboardBar: FC<Props> = ({
                 <td>{item.Name}</td>
                 <td>{item.Description}</td>
                 <td>{item.LastUpdated}</td>
-                <td className={styles.rowButton}>
+                <td className={styles.rowButton} onClick={onEdit(item.ID)}>
                   <FontAwesomeIcon icon={faArrowRight as IconProp} />
                 </td>
               </tr>
