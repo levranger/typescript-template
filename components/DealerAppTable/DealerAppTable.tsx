@@ -49,7 +49,7 @@ export const DealerAppTable: FC = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setSearchParam(e.target.value.toLowerCase());
   const handleRowEdit = (id: string) => (): Promise<boolean> =>
-    router.push(`/admin/application/${id}-`);
+    router.push(`/dealer-application/${id}`);
 
   return (
     <div className={styles.wrapper}>

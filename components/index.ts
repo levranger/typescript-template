@@ -23,3 +23,4 @@ export * from './DealerCard/DealerCard';
 export * from './EditDealerContent/EditDealerContent';
 export * from './DatePicker/DatePickerField';
 export * from './ApplicationApproveModal/ApplicationApproveModal';
+export * from './EditDealerApplication/EditDealerApplication';
