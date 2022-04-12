@@ -10,8 +10,10 @@ import styles from './DashboardBar.module.css';
 import {
   DashboardApplicationInterface,
   DashboardBoxEnum,
+  NotificationInterface,
 } from '../../contracts';
 import { getTextStyle } from '../DashboardBox/DashboardBox';
+import { NotificationBar } from '../NotificationBar/NotificationBar';
 
 interface Props {
   icon: IconProp;
@@ -20,6 +22,7 @@ interface Props {
   type: DashboardBoxEnum;
   onNavigate: OnEventFn;
   applications?: DashboardApplicationInterface[];
+  notifications?: NotificationInterface[];
 }
 
 export const DashboardBar: FC<Props> = ({
@@ -28,8 +31,10 @@ export const DashboardBar: FC<Props> = ({
   text,
   description,
   onNavigate,
+  notifications,
   applications,
 }) => {
+  // console.log(notifications);
   return (
     <div className={styles.wrapper}>
       <div className={styles.innerWrapper}>
@@ -50,6 +55,13 @@ export const DashboardBar: FC<Props> = ({
           View more
         </div>
       </div>
+      {Boolean(notifications?.length) && (
+        <div>
+          {notifications.map((item) => (
+            <NotificationBar key={item.ID} {...item} />
+          ))}
+        </div>
+      )}
       {Boolean(applications?.length) && (
         <table className={styles.table}>
           <thead>

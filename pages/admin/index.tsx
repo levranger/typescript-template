@@ -14,7 +14,9 @@ import { userSelector } from '../../features/authSlice';
 const Index: FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
-  const { stats, dashboardApplications } = useSelector(adminDashboardSelector);
+  const { stats, dashboardApplications, notifications } = useSelector(
+    adminDashboardSelector
+  );
 
   useEffect(() => void dispatch(loadStats(user?.ID)), [user]);
   useEffect(() => void dispatch(loadNotifications(user?.ID)), [user]);
@@ -25,6 +27,7 @@ const Index: FC = () => {
       <AdminSidebar />
       <AdminDashboard
         stats={stats}
+        notifications={notifications}
         dashboardApplications={dashboardApplications}
       />
     </div>

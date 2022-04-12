@@ -15,6 +15,7 @@ import { DashboardBox } from '../DashboardBox/DashboardBox';
 import {
   DashboardApplicationInterface,
   DashboardBoxEnum,
+  NotificationInterface,
   StatsInterface,
 } from '../../contracts';
 import { DashboardBar } from '../DashboardBar/DashboardBar';
@@ -22,8 +23,10 @@ import { DashboardBar } from '../DashboardBar/DashboardBar';
 interface Props {
   stats: StatsInterface;
   dashboardApplications: DashboardApplicationInterface[];
+  notifications: NotificationInterface[];
 }
-export const AdminDashboard: FC<Props> = ({ stats, dashboardApplications }) => {
+export const AdminDashboard: FC<Props> = (props) => {
+  const { stats, notifications, dashboardApplications } = props;
   const router = useRouter();
 
   const incompleteApplications = dashboardApplications.filter(
@@ -82,6 +85,7 @@ export const AdminDashboard: FC<Props> = ({ stats, dashboardApplications }) => {
             icon={faBell as IconProp}
             text="Notifications"
             type={DashboardBoxEnum.Notification}
+            notifications={notifications}
           />
           <DashboardBar
             applications={incompleteApplications}
