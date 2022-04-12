@@ -1,7 +1,10 @@
 .wrapper {
-    padding: 100px 0;
-    margin: 0 auto;
-
+    width: 100%;
+    height: 100vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .steps {
     display: flex;
@@ -40,11 +43,13 @@
     display: flex;
 }
 .headerContainer {
-display: flex;
+    margin-top: 45px;
+    display: flex;
     align-items: center;
     backround-color: grey;
     height: 5rem;
     justify-content: space-between;
+    width: 70%;
 }
 
 .tabs {

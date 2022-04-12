@@ -1,10 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ApplicationInterface, NotificationInterface } from '../contracts';
+import { Simulate } from 'react-dom/test-utils';
+import {
+  AddApplicationArgs,
+  ApplicationInterface,
+  NotificationInterface,
+} from '../contracts';
 import { RootState } from '../app/store';
+import load = Simulate.load;
+import { addNotification } from './notifications/notificationSlice';
 
 type DashboardState = {
   applications: ApplicationInterface[];
   notifications: NotificationInterface[];
+  applicationItem: ApplicationInterface;
   pending: boolean;
   error: boolean;
   errorMessage: string;
@@ -13,6 +21,7 @@ type DashboardState = {
 const initialState: DashboardState = {
   applications: [],
   notifications: [],
+  applicationItem: null,
   pending: false,
   error: false,
   errorMessage: '',
@@ -31,6 +40,50 @@ export const loadApplications = createAsyncThunk(
     });
     const response: ApplicationInterface[] = await res.json();
     return response;
+  }
+);
+
+export const loadApplicationItem = createAsyncThunk(
+  'dashboard/loadApplicationItem',
+  async (id: string) => {
+    const res = await fetch('https://tlcfin.prestoapi.com/api/application', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      body: JSON.stringify({ id: Number(id) }),
+    });
+    const response: ApplicationInterface[] = await res.json();
+    return response[0];
+  }
+);
+
+export const updateApplication = createAsyncThunk(
+  'dashboard/addApplication',
+  async (payload: AddApplicationArgs, thunkApi) => {
+    const res = await fetch(
+      'https://tlcfin.prestoapi.com/api/updateapplication',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    const response: any[] = await res.json();
+
+    if (response[0]?.Message === 'Success') {
+      thunkApi.dispatch(
+        addNotification({
+          type: 'success',
+          message: 'Application has been updated',
+          autoHideDuration: 6000,
+        })
+      );
+    }
   }
 );
 
@@ -102,6 +155,30 @@ export const dealerDashboardSlice = createSlice({
         state.pending = false;
         state.error = true;
         state.errorMessage = 'Error loading notifications';
+      })
+      .addCase(loadApplicationItem.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(loadApplicationItem.fulfilled, (state, { payload }) => {
+        state.pending = false;
+        state.applicationItem = payload;
+      })
+      .addCase(loadApplicationItem.rejected, (state) => {
+        state.pending = false;
+        state.error = true;
+        state.errorMessage = 'Loading application failed';
+      })
+      .addCase(updateApplication.pending, (state) => {
+        state.pending = true;
+        state.error = false;
+      })
+      .addCase(updateApplication.rejected, (state) => {
+        state.error = true;
+        state.errorMessage = 'Adding application failed';
+        state.pending = false;
+      })
+      .addCase(updateApplication.fulfilled, (state) => {
+        state.pending = false;
       });
   },
 });
@@ -109,6 +186,8 @@ export const dealerDashboardSlice = createSlice({
 export const { setApplicationsAction, setNotificationsAction } =
   dealerDashboardSlice.actions;
 
+export const dealerDashboardSelector = (state: RootState): DashboardState =>
+  state.dashboard;
 export const applicationsSelector = (
   state: RootState
 ): ApplicationInterface[] => state.dashboard.applications;

@@ -4,20 +4,23 @@ import InputMask from 'react-input-mask';
 import DatePicker from 'react-datepicker';
 import * as Yup from 'yup';
 import cx from 'classnames';
-import { cs, OnEventFn, StyleType } from '@rnw-community/shared';
+import { cs, StyleType } from '@rnw-community/shared';
+import { useDispatch, useSelector } from 'react-redux';
 import { hasErrors } from '../../utils/hasErrors';
 import styles from './EditDealerApplication.module.css';
+import { ApplicationInterface } from '../../contracts';
+import { DealerHeader } from '../DealerHeader/DealerHeader';
+import { updateApplication } from '../../features/dealerDashboardSlice';
+import { userSelector } from '../../features/authSlice';
 
 interface GenericPropsInterface {
   name: string;
   className: StyleType;
-  placeholder?: string;
 }
 const validationSchema = Yup.object({
   FirstName: Yup.string().trim().required('First name is required'),
   LastName: Yup.string().trim().required('Last name is required'),
   MiddleName: Yup.string().trim(),
-  Email: Yup.string().trim().required('Email is required'),
   SSN: Yup.string()
     .required()
     .matches(/^[0-9]+$/, 'Must be only digits')
@@ -25,34 +28,33 @@ const validationSchema = Yup.object({
     .max(9, 'Must be exactly 9 digits'),
   DOB: Yup.date().max(new Date(2004, 1, 1)).required(),
   MonthlyIncome: Yup.number().required('Monthly income is required'),
-  MonthlyExpense: Yup.number().required('Monthly expenses is required'),
+  DLNumber: Yup.string().required('Driver license number is required'),
   EmailAddress: Yup.string().trim().required('EmailAddress is required'),
   CellPhone: Yup.string().trim().required('Phone number is required'),
-  DriverLicense: Yup.string().trim().required('Driver license is required'),
   Address: Yup.string().trim().required('Address is required'),
   City: Yup.string().trim().required('City is required'),
   State: Yup.string().trim().required('State is required'),
-  ZipCode: Yup.string().trim().required('Zip code is required'),
+  PostalCode: Yup.string().trim().required('Zip code is required'),
   HousingStatus: Yup.string().trim().required('Housing status is required'),
-  TimeAtAddress: Yup.number().required('Time at this address is required'),
-  MonthlyPayment: Yup.number().required('Monthly housing payment is required'),
-  CompanyName: Yup.string().trim().required('Company name is required'),
+  HowLong: Yup.number().required('Time at this address is required'),
+  EmployerName: Yup.string().trim().required('Company name is required'),
   WorkPhone: Yup.string().trim().required('Work phone is required'),
   Position: Yup.string().trim().required('Position is required'),
-  EmploymentStatus: Yup.string()
-    .trim()
-    .required('Employment status is required'),
-  YearsAtCompany: Yup.number().required('Years at company is required'),
+  PositionType: Yup.string().trim().required('Employment status is required'),
+  YearsAtCurrentJob: Yup.number().required('Years at company is required'),
+  MonthlyHousingPayment: Yup.number().required(
+    'Monthly housing payment is required'
+  ),
   VIN: Yup.string().trim().required('VIN is required'),
-  Year: Yup.number().required('Year is required'),
-  Make: Yup.string().trim().required('Make is required'),
-  Model: Yup.string().trim().required('Model is required'),
-  Mileage: Yup.number().required('Mileage is required'),
-  Engine: Yup.number(),
-  Transmission: Yup.string().required('Transmission is required'),
-  Color: Yup.string().trim(),
+  VehicleYear: Yup.number().required('Year is required'),
+  VehicleMake: Yup.string().trim().required('Make is required'),
+  VehicleModel: Yup.string().trim().required('Model is required'),
+  VehicleMileage: Yup.number().required('Mileage is required'),
+  VehicleEngine: Yup.string().required('Engine is required'),
+  VehicleTransmission: Yup.string().required('Transmission is required'),
+  VehicleColor: Yup.string().trim(),
   PurchasePrice: Yup.number().required('Purchase price is required'),
-  Deposit: Yup.number().required('Deposit is required'),
+  DepositFloat: Yup.number().required('Deposit is required'),
   AmountFinanced: Yup.number().required('Amount financed is required'),
 });
 
@@ -100,9 +102,58 @@ export const MaskedInput: FC<GenericPropsInterface> = ({
   );
 };
 
-export const EditDealerApplication: FC = () => {
+interface Props {
+  initialValues: ApplicationInterface;
+}
+
+export const EditDealerApplication: FC<Props> = ({ initialValues }) => {
+  const dispatch = useDispatch();
+
+  const user = useSelector(userSelector);
+
+  const handleSubmit = (values: Partial<ApplicationInterface>): void => {
+    dispatch(
+      updateApplication({
+        Address: values.Address,
+        AmountFinanced: values.AmountFinanced,
+        ApplicationID: values.ApplicationID,
+        CellPhone: values.CellPhone,
+        City: values.City,
+        DLNumber: values.DLNumber,
+        DOB: values.DOB,
+        DepositFloat: values.DepositFloat,
+        EmailAddress: values.EmailAddress,
+        EmployerName: values.EmployerName,
+        FirstName: values.FirstName,
+        HousingStatus: values.HousingStatus,
+        HowLong: values.HowLong,
+        LastName: values.LastName,
+        MiddleName: values.MiddleName,
+        MonthlyHousingPayment: values.MonthlyHousingPayment,
+        MonthlyIncome: values.MonthlyIncome,
+        Position: values.Position,
+        PositionType: values.PositionType,
+        PostalCode: values.PostalCode,
+        PurchasePrice: values.PurchasePrice,
+        State: values.State,
+        VIN: values.VIN,
+        VehicleColor: values.VehicleColor,
+        VehicleEngine: values.VehicleEngine,
+        VehicleHorsePower: values.VehicleHorsePower,
+        VehicleMake: values.VehicleMake,
+        VehicleMileage: values.VehicleMileage,
+        VehicleModel: values.VehicleModel,
+        VehicleTransmission: values.VehicleTransmission,
+        VehicleYear: values.VehicleYear,
+        WorkPhone: values.WorkPhone,
+        YearsAtCurrentJob: values.YearsAtCurrentJob,
+        userId: user.ID,
+      })
+    );
+  };
   return (
     <div className={styles.wrapper}>
+      <DealerHeader />
       <div className={styles.headerContainer}>
         <h1 className={styles.blue}>Update Account (Profile #)</h1>
         <div className={styles.buttonContainer2}>
@@ -115,44 +166,17 @@ export const EditDealerApplication: FC = () => {
 
         <h4>10001</h4>
       </div>
-      <Formik
+      <Formik<ApplicationInterface>
         validationSchema={validationSchema}
         validateOnBlur
+        onSubmit={handleSubmit}
+        enableReinitialize
         initialValues={{
-          FirstName: '',
-          MiddleName: '',
-          LastName: '',
-          CellPhone: '',
-          Email: '',
-          SSN: '',
-          DOB: new Date(),
-          Address: '',
-          City: '',
-          State: '',
-          ZipCode: '',
-          HousingStatus: '',
-          TimeAtAddress: 0,
-          MonthlyPayment: 0,
-          CompanyName: '',
-          WorkPhone: '',
-          Position: '',
-          EmploymentStatus: '',
-          YearsAtCompany: 0,
-          MonthlyIncome: 0,
-          VIN: '',
-          Year: 0,
-          Make: '',
-          Model: '',
-          Mileage: 0,
-          Engine: 0,
-          Transmission: '',
-          Color: '',
-          PurchasePrice: 0,
-          Deposit: 0,
-          AmountFinanced: 0,
+          ...initialValues,
+          DOB: new Date(initialValues?.DOB ?? '2004-04-04T00:00:00'),
         }}
       >
-        {({ errors, touched, initialValues, values }) => {
+        {({ errors, values, touched, submitForm }) => {
           const firstNameHasErrors = hasErrors(
             touched.FirstName,
             errors.FirstName
@@ -168,10 +192,9 @@ export const EditDealerApplication: FC = () => {
             touched.MonthlyIncome,
             errors.MonthlyIncome
           );
-          const MonthlyExpenseHasErrors = hasErrors(
-            touched.MonthlyExpense,
-            errors.MonthlyExpense
-          );
+
+          console.log(errors);
+
           const EmailAddressHasErrors = hasErrors(
             touched.EmailAddress,
             errors.EmailAddress
@@ -180,25 +203,32 @@ export const EditDealerApplication: FC = () => {
             touched.CellPhone,
             errors.CellPhone
           );
+          const driverLicenseHasErrors = hasErrors(
+            touched.DLNumber,
+            errors.DLNumber
+          );
 
           const CityHasErrors = hasErrors(touched.City, errors.City);
           const StateHasErrors = hasErrors(touched.State, errors.State);
-          const ZipCodeHasErrors = hasErrors(touched.ZipCode, errors.ZipCode);
+          const PostalCodeHasErrors = hasErrors(
+            touched.PostalCode,
+            errors.PostalCode
+          );
           const HousingStatusHasErrors = hasErrors(
             touched.HousingStatus,
             errors.HousingStatus
           );
           const TimeAtAddressHasErrors = hasErrors(
-            touched.TimeAtAddress,
-            errors.TimeAtAddress
+            touched.HowLong,
+            errors.HowLong
           );
           const MonthlyPaymentHasErrors = hasErrors(
-            touched.MonthlyPayment,
-            errors.MonthlyPayment
+            touched.MonthlyHousingPayment,
+            errors.MonthlyHousingPayment
           );
           const CompanyNameHasErrors = hasErrors(
-            touched.CompanyName,
-            errors.CompanyName
+            touched.EmployerName,
+            errors.EmployerName
           );
           const WorkPhoneHasErrors = hasErrors(
             touched.WorkPhone,
@@ -208,32 +238,53 @@ export const EditDealerApplication: FC = () => {
             touched.Position,
             errors.Position
           );
-          const EmploymentStatusHasErrors = hasErrors(
-            touched.EmploymentStatus,
-            errors.EmploymentStatus
+          const PositionTypeHasErrors = hasErrors(
+            touched.PositionType,
+            errors.PositionType
           );
-          const YearsAtCompanyHasErrors = hasErrors(
-            touched.YearsAtCompany,
-            errors.YearsAtCompany
+          const YearsAtCurrentJobHasErrors = hasErrors(
+            touched.YearsAtCurrentJob,
+            errors.YearsAtCurrentJob
           );
 
           const VINHasErrors = hasErrors(touched.VIN, errors.VIN);
-          const YearHasErrors = hasErrors(touched.Year, errors.Year);
-          const MakeHasErrors = hasErrors(touched.Make, errors.Make);
-          const ModelHasErrors = hasErrors(touched.Model, errors.Model);
-
-          const MileageHasErrors = hasErrors(touched.Mileage, errors.Mileage);
-          const EngineHasErrors = hasErrors(touched.Engine, errors.Engine);
-          const TransmissionHasErrors = hasErrors(
-            touched.Transmission,
-            errors.Transmission
+          const YearHasErrors = hasErrors(
+            touched.VehicleYear,
+            errors.VehicleYear
           );
-          const ColorHasErrors = hasErrors(touched.Color, errors.Color);
+          const MakeHasErrors = hasErrors(
+            touched.VehicleMake,
+            errors.VehicleMake
+          );
+          const ModelHasErrors = hasErrors(
+            touched.VehicleModel,
+            errors.VehicleModel
+          );
+
+          const MileageHasErrors = hasErrors(
+            touched.VehicleMileage,
+            errors.VehicleMileage
+          );
+          const EngineHasErrors = hasErrors(
+            touched.VehicleEngine,
+            errors.VehicleEngine
+          );
+          const TransmissionHasErrors = hasErrors(
+            touched.VehicleTransmission,
+            errors.VehicleTransmission
+          );
+          const ColorHasErrors = hasErrors(
+            touched.VehicleColor,
+            errors.VehicleColor
+          );
           const PurchasePriceHasErrors = hasErrors(
             touched.PurchasePrice,
             errors.PurchasePrice
           );
-          const DepositHasErrors = hasErrors(touched.Deposit, errors.Deposit);
+          const DepositHasErrors = hasErrors(
+            touched.DepositFloat,
+            errors.DepositFloat
+          );
           const AmountFinancedHasErrors = hasErrors(
             touched.AmountFinanced,
             errors.AmountFinanced
@@ -245,6 +296,7 @@ export const EditDealerApplication: FC = () => {
               cx(styles.errorInput, styles.input) as StyleType,
               styles.input as StyleType
             );
+
           return (
             <Form className={styles.form}>
               <div className={styles.steps}>
@@ -268,7 +320,7 @@ export const EditDealerApplication: FC = () => {
                 </div>
                 <div className={styles.inputContainer}>
                   <label className={styles.formLabel} htmlFor="MiddleName">
-                    Middle name <span className={styles.asterisk}>*</span>
+                    Middle name
                   </label>
                   <Field
                     placeholder="Middle name"
@@ -343,12 +395,12 @@ export const EditDealerApplication: FC = () => {
                   </label>
                   <Field
                     placeholder="Driver License"
-                    name="DriverLicense"
+                    name="DLNumber"
                     type="number"
-                    className={inputErrorStyle(ssnHasErrors)}
+                    className={inputErrorStyle(driverLicenseHasErrors)}
                   />
-                  {ssnHasErrors && (
-                    <div className={styles.error}>{errors.SSN}</div>
+                  {driverLicenseHasErrors && (
+                    <div className={styles.error}>{errors.DLNumber}</div>
                   )}
                 </div>
               </div>
@@ -456,17 +508,17 @@ export const EditDealerApplication: FC = () => {
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label className={styles.formLabel} htmlFor="ZipCode">
+                  <label className={styles.formLabel} htmlFor="PostalCode">
                     Zip Code <span className={styles.asterisk}>*</span>
                   </label>
                   <Field
                     placeholder="Zip Code"
-                    name="ZipCode"
+                    name="PostalCode"
                     type="text"
-                    className={inputErrorStyle(ZipCodeHasErrors)}
+                    className={inputErrorStyle(PostalCodeHasErrors)}
                   />
-                  {ZipCodeHasErrors && (
-                    <div className={styles.error}>{errors.ZipCode}</div>
+                  {PostalCodeHasErrors && (
+                    <div className={styles.error}>{errors.PostalCode}</div>
                   )}
                 </div>
               </div>
@@ -492,12 +544,12 @@ export const EditDealerApplication: FC = () => {
                   </label>
                   <Field
                     placeholder="Time at this address"
-                    name="TimeAtAddress"
+                    name="HowLong"
                     type="number"
                     className={inputErrorStyle(TimeAtAddressHasErrors)}
                   />
                   {TimeAtAddressHasErrors && (
-                    <div className={styles.error}>{errors.TimeAtAddress}</div>
+                    <div className={styles.error}>{errors.HowLong}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
@@ -512,7 +564,9 @@ export const EditDealerApplication: FC = () => {
                     className={inputErrorStyle(MonthlyPaymentHasErrors)}
                   />
                   {MonthlyPaymentHasErrors && (
-                    <div className={styles.error}>{errors.MonthlyPayment}</div>
+                    <div className={styles.error}>
+                      {errors.MonthlyHousingPayment}
+                    </div>
                   )}
                 </div>
               </div>
@@ -523,17 +577,17 @@ export const EditDealerApplication: FC = () => {
                   <h2>Employment Details</h2>
                 </div>
                 <div className={styles.inputContainer}>
-                  <label className={styles.formLabel} htmlFor="CompanyName">
+                  <label className={styles.formLabel} htmlFor="EmployerName">
                     Company Name <span className={styles.asterisk}>*</span>
                   </label>
                   <Field
                     placeholder="Company Name"
-                    name="CompanyName"
+                    name="EmployerName"
                     type="text"
                     className={inputErrorStyle(CompanyNameHasErrors)}
                   />
                   {CompanyNameHasErrors && (
-                    <div className={styles.error}>{errors.CompanyName}</div>
+                    <div className={styles.error}>{errors.EmployerName}</div>
                   )}
                 </div>
               </div>
@@ -570,36 +624,36 @@ export const EditDealerApplication: FC = () => {
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label
-                    className={styles.formLabel}
-                    htmlFor="EmploymentStatus"
-                  >
+                  <label className={styles.formLabel} htmlFor="PositionType">
                     Employment Status <span className={styles.asterisk}>*</span>
                   </label>
                   <Field
-                    placeholder="Employment Status"
-                    name="EmploymentStatus"
+                    placeholder="Position Type"
+                    name="PositionType"
                     type="select"
-                    className={inputErrorStyle(EmploymentStatusHasErrors)}
+                    className={inputErrorStyle(PositionTypeHasErrors)}
                   />
-                  {EmploymentStatusHasErrors && (
-                    <div className={styles.error}>
-                      {errors.EmploymentStatus}
-                    </div>
+                  {PositionTypeHasErrors && (
+                    <div className={styles.error}>{errors.PositionType}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label className={styles.formLabel} htmlFor="YearsAtCompany">
+                  <label
+                    className={styles.formLabel}
+                    htmlFor="YearsAtCurrentJob"
+                  >
                     Years at company <span className={styles.asterisk}>*</span>
                   </label>
                   <Field
                     placeholder="Years at company"
-                    name="YearsAtCompany"
-                    type="text"
-                    className={inputErrorStyle(YearsAtCompanyHasErrors)}
+                    name="YearsAtCurrentJob"
+                    type="number"
+                    className={inputErrorStyle(YearsAtCurrentJobHasErrors)}
                   />
-                  {YearsAtCompanyHasErrors && (
-                    <div className={styles.error}>{errors.YearsAtCompany}</div>
+                  {YearsAtCurrentJobHasErrors && (
+                    <div className={styles.error}>
+                      {errors.YearsAtCurrentJob}
+                    </div>
                   )}
                 </div>
               </div>
@@ -646,12 +700,12 @@ export const EditDealerApplication: FC = () => {
                   </label>
                   <Field
                     placeholder="Year"
-                    name="Year"
+                    name="VehicleYear"
                     type="number"
                     className={inputErrorStyle(YearHasErrors)}
                   />
                   {YearHasErrors && (
-                    <div className={styles.error}>{errors.Year}</div>
+                    <div className={styles.error}>{errors.VehicleYear}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
@@ -660,12 +714,12 @@ export const EditDealerApplication: FC = () => {
                   </label>
                   <Field
                     placeholder="Make"
-                    name="Make"
+                    name="VehicleMake"
                     type="text"
                     className={inputErrorStyle(MakeHasErrors)}
                   />
                   {MakeHasErrors && (
-                    <div className={styles.error}>{errors.Make}</div>
+                    <div className={styles.error}>{errors.VehicleMake}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
@@ -674,72 +728,77 @@ export const EditDealerApplication: FC = () => {
                   </label>
                   <Field
                     placeholder="Model"
-                    name="Model"
+                    name="VehicleModel"
                     type="text"
                     className={inputErrorStyle(ModelHasErrors)}
                   />
                   {ModelHasErrors && (
-                    <div className={styles.error}>{errors.Model}</div>
+                    <div className={styles.error}>{errors.VehicleModel}</div>
                   )}
                 </div>
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label className={styles.formLabel} htmlFor="Mileage">
+                  <label className={styles.formLabel} htmlFor="VehicleMileage">
                     Mileage <span className={styles.asterisk}>*</span>
                   </label>
                   <Field
                     placeholder="Mileage"
-                    name="Mileage"
+                    name="VehicleMileage"
                     type="text"
                     className={inputErrorStyle(MileageHasErrors)}
                   />
                   {MileageHasErrors && (
-                    <div className={styles.error}>{errors.Mileage}</div>
+                    <div className={styles.error}>{errors.VehicleMileage}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label className={styles.formLabel} htmlFor="Engine">
+                  <label className={styles.formLabel} htmlFor="VehicleEngine">
                     Engine <span className={styles.asterisk}>*</span>
                   </label>
                   <Field
                     placeholder="Engine"
-                    name="Engine"
+                    name="VehicleEngine"
                     type="type"
                     className={inputErrorStyle(EngineHasErrors)}
                   />
                   {EngineHasErrors && (
-                    <div className={styles.error}>{errors.Engine}</div>
+                    <div className={styles.error}>{errors.VehicleEngine}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
-                  <label className={styles.formLabel} htmlFor="Transmission">
+                  <label
+                    className={styles.formLabel}
+                    htmlFor="VehicleTransmission"
+                  >
                     Transmission <span className={styles.asterisk}>*</span>
                   </label>
                   <Field
                     placeholder="Transmission"
-                    name="Transmission"
+                    name="VehicleTransmission"
                     type="text"
                     className={inputErrorStyle(TransmissionHasErrors)}
                   />
                   {TransmissionHasErrors && (
-                    <div className={styles.error}>{errors.Transmission}</div>
+                    <div className={styles.error}>
+                      {errors.VehicleTransmission}
+                    </div>
                   )}
                 </div>
               </div>
               <div className={styles.row}>
                 <div className={styles.inputContainer}>
-                  <label className={styles.formLabel} htmlFor="Color">
-                    Color <span className={styles.asterisk}>*</span>
+                  <label className={styles.formLabel} htmlFor="VehicleColor">
+                    Color
                   </label>
                   <Field
                     placeholder="Color"
-                    name="Color"
+                    name="VehicleColor"
                     type="text"
                     className={inputErrorStyle(ColorHasErrors)}
                   />
                   {ColorHasErrors && (
-                    <div className={styles.error}>{errors.Color}</div>
+                    <div className={styles.error}>{errors.VehicleColor}</div>
                   )}
                 </div>
               </div>
@@ -765,12 +824,12 @@ export const EditDealerApplication: FC = () => {
                   </label>
                   <Field
                     placeholder="Deposit"
-                    name="Deposit"
+                    name="DepositFloat"
                     type="number"
                     className={inputErrorStyle(DepositHasErrors)}
                   />
                   {DepositHasErrors && (
-                    <div className={styles.error}>{errors.Deposit}</div>
+                    <div className={styles.error}>{errors.DepositFloat}</div>
                   )}
                 </div>
                 <div className={styles.inputContainer}>
@@ -789,7 +848,9 @@ export const EditDealerApplication: FC = () => {
                 </div>
               </div>
               <div className={styles.buttonContainer}>
-                <button type="submit">SAVE</button>
+                <button onClick={() => console.log('here')} type="submit">
+                  SAVE
+                </button>
               </div>
             </Form>
           );

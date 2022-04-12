@@ -19,6 +19,7 @@ interface Props {
   description?: string;
   type: DashboardBoxEnum;
   onNavigate: OnEventFn;
+  onEdit: (id: string) => () => void;
   applications?: DashboardApplicationInterface[];
 }
 
@@ -28,6 +29,7 @@ export const DashboardBar: FC<Props> = ({
   text,
   description,
   onNavigate,
+  onEdit,
   applications,
 }) => {
   return (
@@ -68,7 +70,7 @@ export const DashboardBar: FC<Props> = ({
                 <td>{item.Name}</td>
                 <td>{item.Description}</td>
                 <td>{item.LastUpdated}</td>
-                <td className={styles.rowButton}>
+                <td className={styles.rowButton} onClick={onEdit(item.ID)}>
                   <FontAwesomeIcon icon={faArrowRight as IconProp} />
                 </td>
               </tr>
