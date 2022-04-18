@@ -559,7 +559,7 @@ export const CreateAppForm: FC<Props> = ({ states }) => {
                 </div>
               </div>
               <div className={styles.formFooter}>
-                <div>Save</div>
+                <div onClick={submitForm}>Save</div>
               </div>
             </Form>
           );

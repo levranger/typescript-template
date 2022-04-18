@@ -32,12 +32,10 @@ export const DealerRow: FC<Props> = ({
     Approved: styles.green,
     'Conditional Approval': styles.orange,
   }[Status];
+
   return (
     <tr className={styles.tableRow}>
-      <td>
-        {FirstName}
-        {LastName}
-      </td>
+      <td>{FirstName.concat(` ${LastName}`)}</td>
       <td>{ApplicationID}</td>
       <td>{CellPhone}</td>
       <td>
