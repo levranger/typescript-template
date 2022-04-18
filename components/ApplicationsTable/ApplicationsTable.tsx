@@ -88,7 +88,7 @@ export const ApplicationsTable: FC<Props> = ({
         <SearchBar onChange={handleInputChange} inputValue={searchParam} />
         <div className={styles.tableWrapper}>
           <table className={styles.table}>
-            <thead>
+            <thead className={styles.tableHeader}>
               <tr>
                 <th>Name</th>
                 <th>Approval code</th>
@@ -100,7 +100,7 @@ export const ApplicationsTable: FC<Props> = ({
                 <th />
               </tr>
             </thead>
-            <tbody>
+            <tbody className={styles.tableBody}>
               {applications.map((item) => (
                 <DealerRow
                   key={item.ID}

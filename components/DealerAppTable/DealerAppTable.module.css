@@ -22,9 +22,12 @@
 .applicants {
     color: #9B9BA7;
     font-size: 15px;
+    font-weight: 600;
 }
 .titleLeft h3 {
     color: #154F85;
+    font-weight: 500;
+    font-size: 1.8rem;
 }
 .searchbarContainer {
     background-color: #f2f2f2;
@@ -40,24 +43,32 @@
 }
 
 .tableHeader th {
-    padding: 1.2rem 2.2rem;
-    font-size: 1.4rem;
+    color: #717181;
+    padding: 1rem 2.2rem;
+    font-size: .9rem;
     line-height: 1.21;
     font-weight: 500;
-    background: #f3f3f3;
+    background: #F9F9FB;
+    border-bottom: 1px solid black;
 }
-.tableHeader {
-    border-bottom: 2px solid black;
-}
+
 
 .table {
     margin-top: 40px;
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 0.2rem;
-    overflow-x: scroll ;
+
+}
+.table td {
+    color: #717181;
+    font-size: .8rem;
+font-weight: 400;
+}
+.tableWrapper {
+    overflow-x: auto;
 }
 
-.tableWrapper {
-    overflow-x: scroll;
+.overflow {
+    overflow-x: auto;
 }

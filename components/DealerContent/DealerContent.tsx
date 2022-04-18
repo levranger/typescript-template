@@ -61,13 +61,14 @@ export const DealerContent: FC = () => {
             />
             Add new
           </div>
+          <span>Showing {dealers.length} results</span>
         </div>
-        <span>Showing {dealers.length} results</span>
+
         <SearchBar onChange={handleInputChange} inputValue={searchParam} />
         <div className={styles.tableWrapper}>
           <table className={styles.table}>
             <thead>
-              <tr>
+              <tr className={styles.tableHeader}>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Contact</th>

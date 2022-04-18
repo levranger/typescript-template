@@ -13,6 +13,8 @@
 }
 .title h3 {
     color: #154F85;
+    font-weight: 500;
+    font-size: 1.9rem;
 }
 .icon {
     margin-right: 1rem;
@@ -43,7 +45,7 @@
 }
 
 .formInput {
-    border: 1px solid black;
+    border: 1px solid #B2B2B2;
     padding: 10px 15px;
     margin-right: 10px;
 }
@@ -61,11 +63,11 @@
 }
 
 .inputBox p {
-    font-size: 19px;
+    font-size: 14px;
     font-weight: 500;
     margin-bottom: 10px;
     position: relative;
-
+color: #83786D;
 }
 
 .required {
@@ -77,7 +79,7 @@
 
 
 .select {
-    border: 1px solid black;
+    border: 1px solid #B2B2B2;
     padding: 11px 15px;
     margin-right: 10px;
 }
@@ -100,4 +102,14 @@
 
 .error {
     color: red;
+}
+
+@media screen and (max-width: 1023px) {
+    .formRow {
+        display: flex;
+        flex-direction: column;
+    }
+    .inputBox p {
+        margin-top: 10px;
+    }
 }

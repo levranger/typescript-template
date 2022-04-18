@@ -17,7 +17,7 @@ export const NotificationRow: FC<Props> = ({
   if (!isShown) return null;
   return (
     <tr className={styles.tableRow}>
-      <td>
+      <td className={styles.bell}>
         <FontAwesomeIcon icon={faBell as IconProp} color="lightgreen" />
       </td>
       <td>{FirstName.concat(` ${LastName}`)}</td>

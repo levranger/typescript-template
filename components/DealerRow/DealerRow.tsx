@@ -25,6 +25,13 @@ export const DealerRow: FC<Props> = ({
   isShown,
 }) => {
   if (!isShown) return null;
+
+  const statusStyle = {
+    Declined: styles.red,
+    Incomplete: styles.blue,
+    Approved: styles.green,
+    'Conditional Approval': styles.orange,
+  }[Status];
   return (
     <tr className={styles.tableRow}>
       <td>
@@ -40,7 +47,7 @@ export const DealerRow: FC<Props> = ({
       </td>
       <td>{PurchasePrice}</td>
       <td>{VIN}</td>
-      <td>{Status}</td>
+      <td className={statusStyle}>{Status}</td>
       <td
         className={styles.rowButton}
         onClick={onEditClick(ApplicationID.toString())}

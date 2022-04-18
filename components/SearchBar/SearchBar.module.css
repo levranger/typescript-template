@@ -7,6 +7,6 @@
 .searchInput {
     padding: 10px;
     height: 40px;
-    border: .5px solid black;
+    border: .5px solid #ccc;
     border-radius: 5px;
 }

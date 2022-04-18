@@ -11,6 +11,8 @@
 .title {
     color: #154F85;
     margin-bottom: 0;
+    font-weight: 500;
+    font-size: 1.8rem;
 }
 
 .contentHeader {
@@ -44,17 +46,28 @@
     width: 100%;
 }
 
-.table  {
+
+.tableHeader th {
+    color: #717181;
+    padding: 1rem 2.2rem;
+    font-size: .9rem;
+    line-height: 1.21;
+    font-weight: 500;
+    background: #F9F9FB;
     border-bottom: 1px solid black;
-
 }
-
 .table thead tr th {
-    background: #F2F2F2;
+
     padding: 15px;
     font-size: 14px;
 }
 
+.table td {
+    color: #717181;
+    font-size: .8rem;
+    font-weight: 400;
+    padding-left: 15px;
+}
 .table tbody {
     margin-top: 40px;
 }

@@ -24,6 +24,8 @@
 }
 .titleLeft h3 {
     color: #154F85;
+    font-weight: 500;
+    font-size: 1.8rem;
 }
 .searchbarContainer {
     background-color: #f2f2f2;
@@ -38,16 +40,21 @@
     padding-left: 15px;
 }
 .tableHeader th {
-    padding: 1.2rem 2.2rem;
-    font-size: 1.4rem;
+    padding: 1rem 2.2rem;
+    font-size: .9rem;
     line-height: 1.21;
     font-weight: 500;
-    background: #f3f3f3;
+    background: #F9F9FB;
+    color: #717181;
+    border-bottom: 1px solid black;
 }
 .tableRow td {
-    padding: 8px 5px;
-    font-size: 13px;
+    padding: 15px 5px 15px 35px;
+
     background: #F9F9FB;
+    color: #717181;
+    font-size: .8rem;
+    font-weight: 400;
 
 }
 .tableRow {
@@ -68,7 +75,8 @@
 }
 
 .tableHeader th:nth-child(1) {
-    width: 5rem;
+    width: 3rem;
+
 }
 
 .tableHeader th:nth-child(2) {
@@ -76,9 +84,12 @@
 }
 
 .tableHeader th:nth-child(3) {
-    width: 35rem;
+    width: 40rem;
 }
-
-.tableHeader th:nth-child(1) {
+.tableHeader th:nth-child(4) {
     width: 10rem;
 }
+.overflow {
+    overflow-x: auto;
+}
+
