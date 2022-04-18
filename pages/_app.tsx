@@ -5,7 +5,9 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import { store } from '../app/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import './styles/global.css';
 import './index.css';
+import { Notifications } from '../features/notifications/components/Notifications';
 
 config.autoAddCss = false;
 
@@ -13,6 +15,8 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <Provider store={store}>
       <Component {...pageProps} />
+
+      <Notifications />
     </Provider>
   );
 }

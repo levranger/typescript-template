@@ -1,0 +1,84 @@
+
+.wrapper {
+    width: 100%;
+    padding:0 30px;
+    overflow-y: scroll;
+    height: 100vh;
+}
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 0;
+}
+.icon {
+    font-size: 30px;
+    margin-right: 35px;
+}
+.titleLeft {
+    display: flex;
+}
+.applicants {
+    color: #9B9BA7;
+    font-size: 15px;
+}
+.titleLeft h3 {
+    color: #154F85;
+}
+.searchbarContainer {
+    background-color: #f2f2f2;
+    padding: 20px;
+
+}
+.searchbar {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 38px;
+    width: 15rem;
+    padding-left: 15px;
+}
+.tableHeader th {
+    padding: 1.2rem 2.2rem;
+    font-size: 1.4rem;
+    line-height: 1.21;
+    font-weight: 500;
+    background: #f3f3f3;
+}
+.tableRow td {
+    padding: 8px 5px;
+    font-size: 13px;
+    background: #F9F9FB;
+
+}
+.tableRow {
+    margin-bottom: 70px;
+
+
+}
+.tableHeader {
+    border-bottom: 2px solid black;
+}
+
+.table {
+    margin-top: 40px;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.2rem;
+    padding-bottom: 2rem;
+}
+
+.tableHeader th:nth-child(1) {
+    width: 5rem;
+}
+
+.tableHeader th:nth-child(2) {
+    width: 10rem;
+}
+
+.tableHeader th:nth-child(3) {
+    width: 35rem;
+}
+
+.tableHeader th:nth-child(1) {
+    width: 10rem;
+}

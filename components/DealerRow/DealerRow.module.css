@@ -1,0 +1,27 @@
+
+.tableRow td {
+    padding: 10px 10px;
+    border-bottom: 1px solid;
+    background: #F9F9FB;
+    border-right: 1px solid black;
+
+}
+.tableRow {
+    margin-bottom: 70px;
+}
+
+.green {
+    color:#4cd504
+}
+
+.orange {
+    color: #ff9200 !important;
+}
+
+.red {
+    color: red
+}
+
+.rowButton {
+    cursor: pointer;
+}

@@ -1,0 +1,30 @@
+.wrapper {
+    flex:1;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.dashboardWrapper {
+    padding: 10px 20px;
+}
+
+.dashboardTitle {
+    padding-left: 10px;
+}
+
+.dashboardHeader {
+    display: flex;
+    align-items: baseline;
+    padding: 20px 0;
+}
+
+.boxWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.barWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}

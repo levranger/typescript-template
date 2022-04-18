@@ -1,0 +1,56 @@
+.wrapper {
+    padding: 20px 15px;
+    border: 0.2rem solid #E9E9E9;
+    border-radius: 0.8rem;
+    flex:1;
+    margin: 0 10px;
+}
+
+.iconWrapper {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.textFailed {
+    color: red;
+}
+
+.text {
+        font-size: 24px;
+
+}
+
+.textPending {
+    color: orange;
+}
+
+.textSuccess {
+    color: green;
+}
+.paragraph {
+    height: 30px;
+}
+.iconFailed {
+    background: rgba(255, 0, 0, 0.2);
+    color: #FF0000;
+}
+
+.iconPending {
+    background: rgba(255, 118, 0, 0.2);
+    color: #FF7600;
+}
+
+.iconSuccess {
+    background: rgba(85, 240, 3, 0.2);
+    color: #55F003;
+}
+
+.textNotification {
+    color: #446ee2
+}
+

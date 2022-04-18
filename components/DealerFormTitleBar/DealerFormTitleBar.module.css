@@ -1,0 +1,31 @@
+.titleBar {
+    padding: 15px;
+    background: #F2F2F2;
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.backButton {
+    background: #fff;
+    border-color: #ccc;
+    color: #333333;
+    border-width: 1px;
+    padding: 10px 20px;
+    border-radius: 8px;
+
+}
+.icon {
+    padding-right: 15px;
+}
+
+
+
+.carContainer {
+    border-right: 1px solid black;
+    padding: 0 20px;
+}
+
+.carContainer h2 {
+    margin: 0
+}

@@ -1,0 +1,77 @@
+.wrapper {
+    display: flex;
+    padding: 20px;
+    align-items: flex-start;
+    width: 100%;
+    border-bottom: 2px solid black;
+    justify-content: space-between;
+    position: relative;
+}
+
+.icon {
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.profileIcon {
+    border-radius: 50%;
+    background-color: orange;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 7px;
+}
+
+.profileContainer {
+    display: flex;
+    width: 300px;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.username {
+    margin: 0;
+}
+
+.chevronIcon {
+    cursor: pointer;
+    color: black;
+    font-size: 20px;
+    margin-top: 8px;
+}
+
+.logoutPanel {
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #c2c2c2;
+    right: 0;
+    top: 80px;
+    width: 19rem;
+    padding: .3rem;
+    margin-right: 2rem;
+    cursor: pointer;
+}
+.notificationPanel {
+    position: absolute;
+    background-color: white;
+    right: 280px;
+    top: 55px;
+
+    width: 25rem;
+    padding: .5rem;
+
+    border: 1px solid #c2c2c2;
+
+}
+.notificationPanel p {
+    padding: .5rem;
+}
+.panel {
+    overflow-y: scroll;
+    height: 25rem;
+}
+.showMessages {
+    text-decoration: underline;
+    cursor: pointer;
+}
