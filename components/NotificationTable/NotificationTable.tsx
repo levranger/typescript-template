@@ -62,21 +62,23 @@ export const NotificationTable: FC<Props> = ({ notifications }) => {
           onChange={handleSearchChange}
         />
       </div>
-      <table className={styles.table}>
-        <thead>
-          <tr className={styles.tableHeader}>
-            <th />
-            <th>Name</th>
-            <th>Description</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {notifications.map((item) => (
-            <NotificationRow key={item.ID} {...item} />
-          ))}
-        </tbody>
-      </table>
+      <div className={styles.overflow}>
+        <table className={styles.table}>
+          <thead>
+            <tr className={styles.tableHeader}>
+              <th />
+              <th>Name</th>
+              <th>Description</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {notifications.map((item) => (
+              <NotificationRow key={item.ID} {...item} />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

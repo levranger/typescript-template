@@ -1,17 +1,18 @@
 
 .tableRow td {
-    padding: 10px 10px;
-    border-bottom: 1px solid;
+    padding: 15px 0px 15px 35px;
+
     background: #F9F9FB;
-    border-right: 1px solid black;
+
 
 }
 .tableRow {
+    border-top: 4px solid white;
     margin-bottom: 70px;
 }
 
 .green {
-    color:#4cd504
+    color:#4cd504 !important;
 }
 
 .orange {
@@ -19,9 +20,11 @@
 }
 
 .red {
-    color: red
+    color: red !important;
 }
-
+.blue {
+    color: blue !important;
+}
 .rowButton {
     cursor: pointer;
 }

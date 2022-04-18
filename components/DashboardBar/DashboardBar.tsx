@@ -57,12 +57,13 @@ export const DashboardBar: FC<Props> = ({
         </div>
       </div>
       {Boolean(notifications?.length) && (
-        <div>
+        <div className={styles.notifications}>
           {notifications.map((item) => (
             <NotificationBar key={item.ID} {...item} />
           ))}
         </div>
       )}
+
       {Boolean(applications?.length) && (
         <table className={styles.table}>
           <thead>

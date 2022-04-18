@@ -65,7 +65,7 @@ export const DealerAppTable: FC = () => {
         </div>
 
         <h5 className={styles.applicants}>
-          Showing {applications.length} applicants
+          Showing {applications.length} Results
         </h5>
       </div>
       <div className={styles.searchbarContainer}>
@@ -76,26 +76,32 @@ export const DealerAppTable: FC = () => {
           onChange={handleSearchChange}
         />
       </div>
-      <table className={styles.table}>
-        <thead>
-          <tr className={styles.tableHeader}>
-            <th>Name</th>
-            <th>Approval code</th>
-            <th>Phone</th>
-            <th>Vehicle</th>
-            <th>Amount</th>
-            <th>VIN</th>
-            <th>STATUS</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {isArray(applications) &&
-            applications.map((item) => (
-              <DealerRow key={item.ID} {...item} onEditClick={handleRowEdit} />
-            ))}
-        </tbody>
-      </table>
+      <div className={styles.overflow}>
+        <table className={styles.table}>
+          <thead>
+            <tr className={styles.tableHeader}>
+              <th>Name</th>
+              <th>Approval code</th>
+              <th>Phone</th>
+              <th>Vehicle</th>
+              <th>Amount</th>
+              <th>VIN</th>
+              <th>Status</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {isArray(applications) &&
+              applications.map((item) => (
+                <DealerRow
+                  key={item.ID}
+                  {...item}
+                  onEditClick={handleRowEdit}
+                />
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

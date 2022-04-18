@@ -113,11 +113,11 @@ export const EditDealerApplication: FC<Props> = ({ initialValues }) => {
         </div>
       </div>
 
-      <div className={styles.steps01}>
+      {/* <div className={styles.steps01}>
         <h4 className={styles.margeR}>01 Approval Code</h4>
 
         <h4>10001</h4>
-      </div>
+      </div> */}
       <Formik<ApplicationInterface>
         validationSchema={validationSchema}
         validateOnBlur
@@ -251,6 +251,11 @@ export const EditDealerApplication: FC<Props> = ({ initialValues }) => {
 
           return (
             <Form className={styles.form}>
+              <div className={styles.steps01}>
+                <h4 className={styles.margeR}>01 Approval Code</h4>
+
+                <h4>10001</h4>
+              </div>
               <div className={styles.steps}>
                 <p>02</p>
                 <h2>Personal Details</h2>

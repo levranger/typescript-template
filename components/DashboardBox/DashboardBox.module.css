@@ -1,9 +1,9 @@
 .wrapper {
-    padding: 20px 15px;
-    border: 0.2rem solid #E9E9E9;
+    padding: 30px 30px 30px 35px;
+    border: 0.15rem solid #E9E9E9;
     border-radius: 0.8rem;
     flex:1;
-    margin: 0 10px;
+    margin: 0px 5px 5px 5px;
 }
 
 .iconWrapper {
@@ -18,6 +18,8 @@
 
 .textFailed {
     color: red;
+    font-weight: 500;
+    font-size: 3rem !important;
 }
 
 .text {
@@ -26,11 +28,15 @@
 }
 
 .textPending {
-    color: orange;
+    color: #ff9200;
+    font-weight: 500;
+    font-size: 3rem;
 }
 
 .textSuccess {
-    color: green;
+    color: #4cd504;
+    font-weight: 500;
+    font-size: 3rem;
 }
 .paragraph {
     height: 30px;

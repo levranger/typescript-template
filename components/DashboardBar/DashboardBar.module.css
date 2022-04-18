@@ -1,15 +1,21 @@
 .wrapper {
     padding: 20px 25px;
     margin-bottom: 40px;
-    border: 0.2rem solid #E9E9E9;
+    border: 0.15rem solid #E9E9E9;
     border-radius: 10px;
-
+width: auto;
+    overflow-x: auto;
 }
-
+.notifications {
+    overflow-y: scroll;
+    height: 400px;
+    width: auto;
+}
 .innerWrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+
 }
 
 .label {
@@ -81,4 +87,14 @@
 
 .rowButton {
     cursor: pointer;
+}
+
+@media screen and (max-width: 1199px) {
+    .notifications {
+
+        width: 100%;
+    }
+    .wrapper {
+        width: 100%;
+    }
 }
